@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-import "../styles/global.css";
-import AuthContext from "../context/NextAuthProvider";
-import Dockbar from "@/components/Dockbar";
+import "../../styles/global.css";
 
 const roboto = Roboto({ weight: ["400", "500", "700"], subsets: ["latin"] });
 
@@ -16,13 +14,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="ko">
-      <AuthContext>
-        <body className={`app-layout ${roboto.className}`}>
-          <div className="app-inner">{children}</div>
-        </body>
-      </AuthContext>
-    </html>
-  );
+  return <div className="app-body">{children}</div>;
 }

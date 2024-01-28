@@ -1,0 +1,9 @@
+.guide {
+  margin: 20px 0 30px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+.link + .link {
+  margin-top: 10px;
+}

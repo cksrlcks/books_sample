@@ -1,0 +1,9 @@
+.bookList {
+  display: flex;
+  gap: 40px 20px;
+  flex-wrap: wrap;
+}
+
+.bookList .item {
+  width: calc(50% - 10px);
+}

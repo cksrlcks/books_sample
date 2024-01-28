@@ -1,0 +1,15 @@
+.bookTempCover {
+  width: 100%;
+  height: 100%;
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bookThumbFrame {
+  width: 100%;
+  aspect-ratio: 2/3;
+  position: relative;
+  margin-bottom: 10px;
+}
