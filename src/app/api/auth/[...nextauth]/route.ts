@@ -1,46 +1,30 @@
 import { signIn } from "@/services/auth";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { SupabaseAdapter } from "@auth/supabase-adapter";
+import jwt from "jsonwebtoken"
 
 export const authOptions = {
-  providers: [
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials, req) {
-        if (credentials == null) return null;
-
-        try {
-          const { user, jwt } = await signIn({
-            username: credentials.username,
-            password: credentials.password,
-          });
-          return { ...user, jwt };
-        } catch (error) {
-          return null;
-        }
-      },
-    }),
-  ],
+  providers: [],
+  adapter: SupabaseAdapter({
+    url: process.env.NEXT_PUBLIC_SUPABASE_URL || "",
+    secret: process.env.SUPABASE_SERVICE_ROLE_KEY || "",
+  }),
   callbacks: {
-    session: async ({ session, token }) => {
-      session.id = token.id;
-      session.jwt = token.jwt;
-      console.log(session);
-      return Promise.resolve(session);
-    },
-
-    jwt: async ({ token, user }) => {
-      if (user) {
-        token.id = user.id;
-        token.jwt = user.jwt;
+    async session({ session, user }) {
+      const signingSecret = process.env.SUPABASE_JWT_SECRET
+      if (signingSecret) {
+        const payload = {
+          aud: "authenticated",
+          exp: Math.floor(new Date(session.expires).getTime() / 1000),
+          sub: user.id,
+          email: user.email,
+          role: "authenticated",
+        }
+        session.supabaseAccessToken = jwt.sign(payload, signingSecret)
       }
-      return Promise.resolve(token);
+      return session
     },
-  },
 };
 const handler = NextAuth(authOptions);
 

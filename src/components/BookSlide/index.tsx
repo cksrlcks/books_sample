@@ -6,7 +6,7 @@ export default function BookSlide({ items }: { items: RecentBook[] }) {
   return (
     <div className={styles.container}>
       {items.map((book) => (
-        <div className={styles.item}>
+        <div className={styles.item} key={book.bookId}>
           <Book item={book} />
         </div>
       ))}

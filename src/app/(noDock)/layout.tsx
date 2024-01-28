@@ -14,5 +14,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div className="app-body">{children}</div>;
+  return (
+    <html lang="ko">
+      <body className={`app-layout ${roboto.className}`}>
+        <div className="app-inner">
+          <div className="app-body">{children}</div>
+        </div>
+      </body>
+    </html>
+  );
 }
