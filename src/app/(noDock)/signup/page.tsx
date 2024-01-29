@@ -1,13 +1,11 @@
 "use client";
-
 import BackButton from "@/components/BackButton";
 import React, { ChangeEventHandler, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { signUp } from "@/services/authClient";
 import { useRouter } from "next/navigation";
 export default function singUp() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const supabase = createClient();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -19,14 +17,11 @@ export default function singUp() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const { data, error } = await supabase.auth.signUp({
+
+    const { data, error } = await signUp({
       email: formData.email,
       password: formData.password,
-      options: {
-        data: {
-          username: formData.username,
-        },
-      },
+      username: formData.username,
     });
 
     if (error) {

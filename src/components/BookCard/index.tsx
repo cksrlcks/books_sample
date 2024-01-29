@@ -3,22 +3,47 @@ import styles from "./style.module.css";
 import { RecentBook } from "@/types/book";
 import Image from "next/image";
 import Link from "next/link";
+import { format, register } from "timeago.js";
+import { ko } from "timeago.js/lib/lang";
+import { FcLike } from "react-icons/fc";
+import { FcComments } from "react-icons/fc";
+register("ko", ko);
 
-export default function Book({ item }: { item: RecentBook }) {
+export default function Book({
+  item,
+  desc = "hide",
+}: {
+  item: RecentBook;
+  desc?: "show" | "hide";
+}) {
   return (
-    <Link href={`/book/${item.bookId}`}>
+    <Link href={`/book/${item.id}`}>
       <article className={styles.bookItem}>
         <figure className={styles.bookThumbFrame}>
-          {item.coverImageUrl ? (
-            <Image src={item.coverImageUrl} alt={item.name} fill />
+          {item["cover_img_url"] ? (
+            <Image src={item["cover_img_url"]} alt={item.name} fill />
           ) : (
             <div className={styles.bookTempCover}>book</div>
           )}
         </figure>
+        <div className={styles.action}>
+          <div className={`${styles.bookIcon} ${styles.like}`}>
+            <FcLike />{" "}
+            <span className={styles.count}>{item.likes[0].count}</span>
+          </div>
+          <div className={`${styles.bookIcon} ${styles.comment}`}>
+            <FcComments />{" "}
+            <span className={styles.count}>{item.comments[0].count}</span>
+          </div>
+        </div>
         <div className={styles.bookName}>{item.name}</div>
-        <div className={styles.bookText}>{item.description}</div>
-        <div className={styles.bookDate}>{item.regDate}</div>
-        <div className={styles.bookLike}>좋아용 : {item.likes}</div>
+        <div className={styles.writter}>
+          {item.writter} · {item.publisher}
+        </div>
+        {desc === "show" && (
+          <div className={styles.bookText}>{item.description}</div>
+        )}
+        <div className={styles.bookDate}>{format(item.created_at, "ko")}</div>
       </article>
     </Link>
   );

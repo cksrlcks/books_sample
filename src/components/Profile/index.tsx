@@ -2,40 +2,45 @@
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { User } from "@/types/user";
-import { createClient } from "@/lib/supabase/client";
 import styles from "./style.module.css";
+import { signOut } from "@/services/authClient";
+import { User } from "@supabase/supabase-js";
+import Button from "../Button";
+import BeforeLogin from "../BeforeLogin";
 
-export default async function Profile({ user }: { user: User | null }) {
-  const supabase = createClient();
+export default function Profile({ user }: { user: User | null }) {
   const router = useRouter();
+
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await signOut();
     router.refresh();
   };
+
+  const avatar = user && user.user_metadata.avatar_url;
+  const username =
+    user &&
+    (user.user_metadata.name ||
+      user?.user_metadata.full_name ||
+      user?.user_metadata.username ||
+      "");
   return (
     <>
       {user ? (
         <>
           <figure className={styles.avatar}>
-            {/* {user.image ? (
-              <img src={user.image} alt={user.user_metadata.username} />
+            {avatar ? (
+              <img src={avatar} alt={username} />
             ) : (
-              
-              
-            )} */}
-            <div className={styles.defaultImage}></div>
+              <div className={styles.defaultImage}>avatar</div>
+            )}
           </figure>
-          <div className={styles.name}>{user.username}님 안녕하세요.</div>
+          <div className={styles.name}>{username}님 안녕하세요.</div>
           <div className={styles.email}>{user.email}</div>
           <br />
-          <button onClick={handleLogout}>로그아웃</button>
+          <Button onClick={handleLogout}>로그아웃</Button>
         </>
       ) : (
-        <div>
-          <Link href="/signin">로그인</Link>
-          <Link href="/signup">회원가입</Link>
-        </div>
+        <BeforeLogin />
       )}
     </>
   );

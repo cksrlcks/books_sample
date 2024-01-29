@@ -3,26 +3,18 @@ import React from "react";
 import styles from "./styles.module.css";
 import PageTitle from "@/components/PageTitle";
 import Profile from "@/components/Profile";
-import { createClient } from "@/lib/supabase/server";
-import { cookies } from "next/headers";
+import { getUser } from "@/services/authServer";
 
 export default async function Mypage() {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
   const {
     data: { user },
-  } = await supabase.auth.getUser();
-  console.log(user);
+  } = await getUser();
   return (
     <div>
       <PageTitle name="마이페이지" />
 
       <div className={styles.me}>
-        <Profile
-          user={
-            user ? { ...user, username: user.user_metadata.username } : null
-          }
-        />
+        <Profile user={user} />
       </div>
 
       <ul className={styles.myNav}>

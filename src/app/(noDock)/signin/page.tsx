@@ -1,11 +1,10 @@
 "use client";
 import BackButton from "@/components/BackButton";
 import React, { useState } from "react";
-import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
+import { signInWithGoogle, signInWithPassword } from "@/services/authClient";
 export default function signIn() {
   const router = useRouter();
-  const supabase = createClient();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -16,10 +15,11 @@ export default function signIn() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await signInWithPassword({
       email: formData.email,
       password: formData.password,
     });
+
     if (error) {
       alert("로그인을 실패했습니다.");
     }
@@ -28,12 +28,28 @@ export default function signIn() {
     }
   };
 
+  const handleGoogleSignin = async () => {
+    const { data, error } = await signInWithGoogle();
+    console.log(data);
+    // if (error) {
+    //   alert("로그인을 실패했습니다.");
+    //   return;
+    // }
+    // router.replace("/mypage");
+  };
+
   return (
     <div>
       <div>
         <BackButton />
       </div>
       <div>로그인 페이지</div>
+      <div>
+        <div>구글로그인</div>
+        <button onClick={handleGoogleSignin}>구글로그인하기</button>
+      </div>
+      <br />
+      <br />
       <form onSubmit={handleSubmit}>
         <div>
           <input
