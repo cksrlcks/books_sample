@@ -30,7 +30,7 @@ export default function signIn() {
 
   const handleGoogleSignin = async () => {
     const { data, error } = await signInWithGoogle();
-    console.log(data);
+
     // if (error) {
     //   alert("로그인을 실패했습니다.");
     //   return;

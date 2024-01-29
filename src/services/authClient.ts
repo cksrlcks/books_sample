@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/client";
 
-//클라이언트는 쿠키필요없이 키로만 요청하는거라 미리 만들어두고 재사용가능한듯
+//csr에서는 client 미리 만들어두고 재사용가능
 const supabase = createClient();
 
 export const signInWithPassword = ({

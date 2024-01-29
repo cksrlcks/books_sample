@@ -4,10 +4,10 @@ import styles from "./styles.module.css";
 import PageTitle from "@/components/PageTitle";
 import Profile from "@/components/Profile";
 import { getUser } from "@/services/authServer";
-
 export default async function Mypage() {
   const {
     data: { user },
+    error,
   } = await getUser();
   return (
     <div>

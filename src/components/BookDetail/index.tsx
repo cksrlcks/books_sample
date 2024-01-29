@@ -15,7 +15,6 @@ export default function BookDetail({
   book: Book;
 }) {
   //const { data, isLoading, error } = useSWR(`/api/book/${bookId}`);
-  // console.log(data);
 
   return (
     <>

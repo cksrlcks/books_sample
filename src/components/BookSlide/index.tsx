@@ -10,7 +10,7 @@ import Skeleton from "../BookCard/Skeleton";
 export default function BookSlide({
   filter,
 }: {
-  filter: "recent" | "like" | "comment";
+  filter: "recent" | "likes" | "comments";
 }) {
   const {
     data: items,
