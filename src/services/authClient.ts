@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/client";
 
+//context api를 위한 client용 client
 //csr에서는 client 미리 만들어두고 재사용가능
 const supabase = createClient();
 

@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { User } from "@/types/user";
 import { cookies } from "next/headers";
 
 export const getBooks = () => {
@@ -37,4 +38,23 @@ export const getBook = (bookId: string) => {
     )
     .eq("id", bookId)
     .single();
+};
+
+export const setLike = ({
+  book_id,
+  user_id,
+}: {
+  book_id: string;
+  user_id: User;
+}) => {
+  const supabase = createClient(cookies());
+  return supabase.from("likes").insert({
+    book_id: book_id,
+    user_id: user_id,
+  });
+};
+
+export const deleteLike = (id: string) => {
+  const supabase = createClient(cookies());
+  return supabase.from("likes").delete().eq("id", id);
 };

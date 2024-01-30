@@ -1,7 +1,6 @@
 "use client";
 import { likes } from "@/types/book";
 import styles from "./like.module.css";
-import { deleteLike, setLike } from "@/services/postClient";
 import useSWR, { mutate } from "swr";
 import { useUser } from "@/context/AuthContext";
 export default function ActionBar({ book_id }: { book_id: string }) {
@@ -17,9 +16,15 @@ export default function ActionBar({ book_id }: { book_id: string }) {
       return;
     }
     if (!liked) {
-      await setLike({ id: book_id, user: user });
+      await fetch("/api/like", {
+        method: "POST",
+        body: JSON.stringify({ book_id, user_id: user.id }),
+      });
     } else {
-      await deleteLike(liked.id);
+      await fetch("/api/like", {
+        method: "DELETE",
+        body: JSON.stringify({ like_id: liked.id }),
+      });
     }
 
     mutate(`/api/like/${book_id}`);
