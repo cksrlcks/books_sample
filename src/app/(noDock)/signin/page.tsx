@@ -61,7 +61,7 @@ export default function signIn() {
             type="password"
             label="비밀번호"
             value={formData.password}
-            name="email"
+            name="password"
             placeholder="비밀번호를 입력해주세요"
             onChange={handleChange}
           />
