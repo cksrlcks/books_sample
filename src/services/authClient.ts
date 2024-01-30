@@ -51,7 +51,7 @@ export const signInWithGoogle = () => {
         access_type: "offline",
         prompt: "consent",
       },
-      redirectTo: "http://localhost:3000/auth/callback",
+      redirectTo: `${process.env.NEXT_PUBLIC_NEXT_URL}/auth/callback`,
     },
   });
 };
