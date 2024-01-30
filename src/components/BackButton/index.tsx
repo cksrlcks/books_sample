@@ -2,15 +2,19 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 import Inner from "../Inner";
-
-export default function BackButton({ mb = 20 }: { mb?: number }) {
+import { IoMdArrowRoundBack } from "react-icons/io";
+import styles from "./style.module.css";
+export default function BackButton({ mb = 30 }: { mb?: number }) {
   const router = useRouter();
   const handleGoBack = () => {
     router.back();
   };
   return (
     <Inner style={{ marginBottom: mb }}>
-      <button onClick={handleGoBack}>뒤로가기</button>
+      <button className={styles.back} onClick={handleGoBack}>
+        <IoMdArrowRoundBack />
+        <div className={styles.text}>뒤로가기</div>
+      </button>
     </Inner>
   );
 }

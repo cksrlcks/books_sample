@@ -3,12 +3,14 @@ import React from "react";
 import styles from "./styles.module.css";
 
 export type ButtonProps = {
+  type: "button" | "submit";
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   children?: React.ReactNode;
   bg?: string;
   disabled?: boolean;
 };
 export default function Button({
+  type = "button",
   onClick,
   children,
   bg = "black",

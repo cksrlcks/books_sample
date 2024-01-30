@@ -36,6 +36,8 @@ export const signUp = ({
     options: {
       data: {
         username: username,
+        full_name: username,
+        name: username,
       },
     },
   });

@@ -1,0 +1,29 @@
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.label {
+  font-size: 15px;
+  font-weight: 700;
+}
+.inputWrapper .input {
+  overflow: hidden;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  height: 40px;
+}
+.inputWrapper input {
+  width: 100%;
+  height: 100%;
+  padding: 0 1em;
+  background: #fff;
+  border: none;
+  letter-spacing: -0.05em;
+}
+
+.inputWrapper input::placeholder {
+  color: #888;
+}

@@ -1,0 +1,52 @@
+.pageTitle {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 1em;
+}
+
+.google {
+  border: 1px solid #eee;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  width: 100%;
+  gap: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.google .text {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.hr {
+  text-align: center;
+  position: relative;
+  height: 1em;
+  margin: 20px 0;
+  font-size: 13px;
+}
+.hr:before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: #ddd;
+  position: absolute;
+  left: 0;
+  top: 50%;
+}
+
+.hr:after {
+  content: "or";
+  display: block;
+  color: #888;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #f8f9fa;
+  padding: 0 1em;
+}
