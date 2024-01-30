@@ -51,7 +51,7 @@ export const signInWithGoogle = () => {
         access_type: "offline",
         prompt: "consent",
       },
-      redirectTo: `${process.env.NEXT_PUBLIC_NEXT_URL}/auth/callback`,
+      redirectTo: `https://books-sample.vercel.app/auth/callback`,
     },
   });
 };
