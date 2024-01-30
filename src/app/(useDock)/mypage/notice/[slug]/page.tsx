@@ -1,5 +1,5 @@
-import React from "react";
+import Inner from "@/components/Inner";
 
 export default function page({ params }: { params: { slug: string } }) {
-  return <div>공지 아이디 {params.slug}의 페이지</div>;
+  return <Inner>공지 아이디 {params.slug}의 페이지</Inner>;
 }

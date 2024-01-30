@@ -1,0 +1,13 @@
+.button {
+  display: flex;
+  align-items: center;
+  padding: 1em;
+  background: #fff;
+  width: 100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  font-size: 14px;
+  color: #888;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+}

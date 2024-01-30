@@ -40,10 +40,6 @@ export const signUp = ({
   });
 };
 
-export const getUser = () => {
-  return supabase.auth.getUser();
-};
-
 export const signInWithGoogle = () => {
   return supabase.auth.signInWithOAuth({
     provider: "google",

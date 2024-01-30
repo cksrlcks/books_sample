@@ -1,7 +1,8 @@
 import Dockbar from "@/components/Dockbar";
 import { Roboto } from "next/font/google";
 import "../../styles/global.css";
-import SWRConfigContext from "../context/SWRConfigContext";
+import SWRConfigContext from "../../context/SWRConfigContext";
+import { AuthContextProvider } from "@/context/AuthContext";
 
 const roboto = Roboto({ weight: ["400", "500", "700"], subsets: ["latin"] });
 
@@ -10,10 +11,12 @@ export default function layout({ children }: { children: React.ReactNode }) {
     <html lang="ko">
       <body className={`app-layout ${roboto.className}`}>
         <div className="app-inner">
-          <SWRConfigContext>
-            <div className="app-body">{children}</div>
-            <Dockbar />
-          </SWRConfigContext>
+          <AuthContextProvider>
+            <SWRConfigContext>
+              <div className="app-body">{children}</div>
+              <Dockbar />
+            </SWRConfigContext>
+          </AuthContextProvider>
         </div>
       </body>
     </html>

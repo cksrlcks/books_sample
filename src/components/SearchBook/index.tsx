@@ -1,23 +1,23 @@
 "use client";
 
-import React, { FormEventHandler, useState } from "react";
+import React, { FormEvent, FormEventHandler, useState } from "react";
 import styles from "./style.module.css";
 
-export default function SearchBook() {
-  const [sw, setSw] = useState("");
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSw(e.target.value);
-  };
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(`${sw} 검색`);
-  };
+export default function SearchBook({
+  value,
+  setValue,
+  handleSearch,
+}: {
+  value: string;
+  setValue: (sw: string) => void;
+  handleSearch: (e: FormEvent<HTMLFormElement>) => Promise<void>;
+}) {
   return (
     <form className={styles.searchBox} onSubmit={handleSearch}>
       <input
         type="text"
-        value={sw}
-        onChange={handleChange}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
         placeholder="검색어를 입력해주세요"
         className={styles.searchInput}
       />

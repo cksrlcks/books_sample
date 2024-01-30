@@ -3,6 +3,7 @@ import BackButton from "@/components/BackButton";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signInWithGoogle, signInWithPassword } from "@/services/authClient";
+import Inner from "@/components/Inner";
 export default function signIn() {
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -39,36 +40,36 @@ export default function signIn() {
   };
 
   return (
-    <div>
-      <div>
-        <BackButton />
-      </div>
-      <div>로그인 페이지</div>
-      <div>
-        <div>구글로그인</div>
-        <button onClick={handleGoogleSignin}>구글로그인하기</button>
-      </div>
-      <br />
-      <br />
-      <form onSubmit={handleSubmit}>
+    <>
+      <BackButton />
+      <Inner>
+        <div>로그인 페이지</div>
         <div>
-          <input
-            type="text"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
+          <div>구글로그인</div>
+          <button onClick={handleGoogleSignin}>구글로그인하기</button>
         </div>
-        <div>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit">로그인</button>
-      </form>
-    </div>
+        <br />
+        <br />
+        <form onSubmit={handleSubmit}>
+          <div>
+            <input
+              type="text"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </div>
+          <button type="submit">로그인</button>
+        </form>
+      </Inner>
+    </>
   );
 }

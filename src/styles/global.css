@@ -87,6 +87,7 @@ body {
 
 body {
   color: rgb(var(--foreground-rgb));
+  background: #f8f8f9;
 }
 
 a {
@@ -111,6 +112,9 @@ a {
 }
 .app-body {
   flex: 1;
-  padding: 0 20px 120px;
-  overflow: hidden;
+  padding: 0 0 120px;
+}
+
+.global-inner {
+  padding: 0 20px;
 }

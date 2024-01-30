@@ -1,5 +1,5 @@
-import React from "react";
+import Inner from "@/components/Inner";
 
 export default function NoticePage() {
-  return <div>공지사항</div>;
+  return <Inner>공지사항</Inner>;
 }

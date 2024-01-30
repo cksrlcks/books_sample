@@ -6,6 +6,8 @@ import styles from "./style.module.css";
 import { format, register } from "timeago.js";
 import { ko } from "timeago.js/lib/lang";
 import BackButton from "../BackButton";
+import Inner from "../Inner";
+import ActionBar from "./Like";
 register("ko", ko);
 export default function BookDetail({
   bookId,
@@ -14,8 +16,6 @@ export default function BookDetail({
   bookId: string;
   book: Book;
 }) {
-  //const { data, isLoading, error } = useSWR(`/api/book/${bookId}`);
-
   return (
     <>
       <div className={styles.header}>
@@ -24,14 +24,19 @@ export default function BookDetail({
       <figure className={styles.frame}>
         <img src={book.cover_img_url} alt={book.name} />
       </figure>
-      <div className={styles.bookName}>{book.name}</div>
-      <div className={styles.writter}>
-        {book.writter} · {book.publisher}
-      </div>
-      <div className={styles.bookDate}>
-        등록일 : {format(book.created_at, "ko")}
-      </div>
-      <div className={styles.bookText}>{book.description}</div>
+      <Inner>
+        <ActionBar book_id={book.id} />
+      </Inner>
+      <Inner>
+        <div className={styles.bookName}>{book.name}</div>
+        <div className={styles.writter}>
+          {book.writter} · {book.publisher}
+        </div>
+        <div className={styles.bookDate}>
+          등록일 : {format(book.created_at, "ko")}
+        </div>
+        <div className={styles.bookText}>{book.description}</div>
+      </Inner>
     </>
   );
 }

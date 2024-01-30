@@ -4,13 +4,14 @@ import styles from "./styles.module.css";
 import PageTitle from "@/components/PageTitle";
 import Profile from "@/components/Profile";
 import { getUser } from "@/services/authServer";
+import Inner from "@/components/Inner";
 export default async function Mypage() {
   const {
     data: { user },
     error,
   } = await getUser();
   return (
-    <div>
+    <Inner>
       <PageTitle name="마이페이지" />
 
       <div className={styles.me}>
@@ -44,6 +45,6 @@ export default async function Mypage() {
           </Link>
         </li>
       </ul>
-    </div>
+    </Inner>
   );
 }

@@ -1,18 +1,18 @@
 import BookList from "@/components/BookList";
-import React from "react";
 import PageTitle from "@/components/PageTitle";
-import SearchBook from "@/components/SearchBook";
+import FakeSearchButton from "@/components/FakeSearchButton";
+import Inner from "@/components/Inner";
 export default async function BookPage() {
   return (
-    <div>
+    <Inner>
       <PageTitle name="책" />
-      <SearchBook />
+      <FakeSearchButton placeholder="책제목이나 저자이름으로 검색해보세요" />
       <br />
       <br />
       <br />
       <div>책리스트 (인피니티 스크롤로 만들기)</div>
       <br />
       <BookList />
-    </div>
+    </Inner>
   );
 }

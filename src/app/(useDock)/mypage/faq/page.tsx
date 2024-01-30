@@ -1,5 +1,5 @@
-import React from "react";
+import Inner from "@/components/Inner";
 
 export default function FaqPage() {
-  return <div>자주묻는질문 페이지</div>;
+  return <Inner>자주묻는질문 페이지</Inner>;
 }

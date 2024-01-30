@@ -1,10 +1,11 @@
 import styles from "./style.module.css";
 import BookSlide from "@/components/BookSlide";
+import Inner from "@/components/Inner";
 import Welcome from "@/components/Welcome";
 
 export default async function Home() {
   return (
-    <div>
+    <Inner>
       <section className={styles.section}>
         <div>
           <div className={styles.welcomeTitle}>책방에 오신것을 환영합니다.</div>
@@ -35,6 +36,6 @@ export default async function Home() {
         <div className={styles.title}>코멘트가 많은 책</div>
         <BookSlide filter="comments" />
       </section>
-    </div>
+    </Inner>
   );
 }
