@@ -87,6 +87,17 @@ export const deleteLike = (id: string) => {
   return supabase.from("likes").delete().eq("id", id);
 };
 
+export const getLike = ({
+  book_id,
+  user_id,
+}: {
+  book_id: string;
+  user_id: string;
+}) => {
+  const supabase = createClient(cookies());
+  return supabase.from("likes").select("*").match({ book_id, user_id });
+};
+
 export const search = (sw: string) => {
   const supabase = createClient(cookies());
   return supabase
