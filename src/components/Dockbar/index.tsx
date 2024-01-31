@@ -6,7 +6,7 @@ import { useSelectedLayoutSegment } from "next/navigation";
 
 export default function Dockbar() {
   const segement = useSelectedLayoutSegment();
-  const [currentIdx, setCurrentIdx] = useState("1");
+  const [currentIdx, setCurrentIdx] = useState<string | null>(null);
   useEffect(() => {
     if (segement === "book") {
       setCurrentIdx("1");
@@ -25,7 +25,11 @@ export default function Dockbar() {
   return (
     <nav className={styles.nav}>
       <div className={`${styles.navwrapper}`}>
-        <span className={`${styles.pin} ${styles[`index-${currentIdx}`]}`}>
+        <span
+          className={`${styles.pin} ${
+            currentIdx ? styles[`index-${currentIdx}`] : styles.hide
+          }`}
+        >
           <span className={styles.bar}></span>
         </span>
         <ul>
