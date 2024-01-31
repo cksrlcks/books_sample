@@ -4,11 +4,16 @@ import styles from "./like.module.css";
 import { useUser } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
-export default function ActionBar({ book }: { book: Book }) {
+import useSWR, { mutate } from "swr";
+export default function ActionBar({ book_id }: { book_id: string }) {
   const [likeLoading, setLikeLoading] = useState<boolean>(false);
   const { user } = useUser();
-  const router = useRouter();
-  const liked = user && book.likes?.find((item) => item.user_id == user.id);
+
+  const { data: likes, isLoading } = useSWR<likes[] | null>(
+    `/api/like/${book_id}`
+  );
+  const liked = user && likes?.find((item) => item.user_id == user.id);
+
   const handleLike = async () => {
     setLikeLoading(true);
     if (!user) {
@@ -19,21 +24,18 @@ export default function ActionBar({ book }: { book: Book }) {
     if (!liked) {
       await fetch("/api/like", {
         method: "POST",
-        body: JSON.stringify({ book_id: book.id, user_id: user.id }),
-      }).then((res) => {
-        setLikeLoading(false);
-        router.refresh();
+        body: JSON.stringify({ book_id: book_id, user_id: user.id }),
       });
     } else {
       await fetch("/api/like", {
         method: "DELETE",
         body: JSON.stringify({ like_id: liked.id }),
-      }).then((res) => {
-        setLikeLoading(false);
-        router.refresh();
       });
     }
+    mutate(`/api/like/${book_id}`);
+    setLikeLoading(false);
   };
+
   return (
     <div>
       <button
@@ -41,7 +43,7 @@ export default function ActionBar({ book }: { book: Book }) {
         onClick={handleLike}
         disabled={likeLoading}
       >
-        좋아요 {book.likes?.length || ""}
+        좋아요 {likes?.length || ""}
       </button>
     </div>
   );
