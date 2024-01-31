@@ -1,23 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
-import { cookies } from "next/headers";
+import {
+  getMostCommentedBooks,
+  getMostLikedBooks,
+  getRecentBooks,
+} from "@/services/post";
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const filter = searchParams.get("filter");
-  const supabase = createClient(cookies());
 
   if (filter === "recent") {
-    const { data, error } = await supabase
-      .from("books")
-      .select(
-        `
-      *,
-      likes(count),
-      comments(count)
-      `
-      )
-      .order("created_at", { ascending: false })
-      .limit(5);
+    const { data, error } = await getRecentBooks();
     if (error) {
       return new Response("fail", { status: 400 });
     }
@@ -26,13 +18,7 @@ export async function GET(request: NextRequest) {
   }
 
   if (filter === "likes") {
-    const { data, error } = await supabase.from("books").select(
-      `
-        *,
-        likes(count),
-        comments(count)
-        `
-    );
+    const { data, error } = await getMostLikedBooks();
     if (error) {
       return new Response("fail", { status: 400 });
     }
@@ -44,13 +30,7 @@ export async function GET(request: NextRequest) {
   }
 
   if (filter === "comments") {
-    const { data, error } = await supabase.from("books").select(
-      `
-        *,
-        likes(count),
-        comments(count)
-        `
-    );
+    const { data, error } = await getMostCommentedBooks();
     if (error) {
       return new Response("fail", { status: 400 });
     }

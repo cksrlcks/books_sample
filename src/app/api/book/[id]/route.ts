@@ -1,24 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
-import { cookies } from "next/headers";
+import { getBook } from "@/services/post";
 export async function GET(
   request: NextRequest,
   { params: { id } }: { params: { id: string } }
 ) {
-  const supabase = createClient(cookies());
-
-  const { data, error } = await supabase
-    .from("books")
-    .select(
-      `
-    *,
-    likes(*),
-    comments(*)
-    `
-    )
-    .eq("id", id)
-    .single();
-
+  const { data, error } = await getBook(id);
   if (error) {
     return new Response("fail", { status: 400 });
   }

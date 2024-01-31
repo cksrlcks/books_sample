@@ -5,8 +5,8 @@ import {
   signInWithPassword,
   signOut,
   signUp,
-} from "@/services/authClient";
-import { User } from "@/types/user";
+} from "@/services/auth";
+import { User } from "@supabase/supabase-js";
 import {
   AuthError,
   AuthResponse,

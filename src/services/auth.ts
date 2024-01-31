@@ -51,7 +51,25 @@ export const signInWithGoogle = () => {
         access_type: "offline",
         prompt: "consent",
       },
-      redirectTo: `https://books-sample.vercel.app/auth/callback`,
+      redirectTo: `${process.env.NEXT_PUBLIC_NEXT_URL}/auth/callback`,
     },
   });
+};
+
+export const getUserActivityData = async (user_id: string) => {
+  const getUserLikes = () => {
+    return supabase.from("likes").select("*").eq("user_id", user_id);
+  };
+
+  const getUserComments = () => {
+    return supabase.from("comments").select("*").eq("user_id", user_id);
+  };
+
+  return Promise.all([getUserLikes(), getUserComments()])
+    .then((data) => {
+      return { likes: data[0], comments: data[1] };
+    })
+    .catch((error) => {
+      throw new Error(error);
+    });
 };

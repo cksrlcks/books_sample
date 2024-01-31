@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./styles.module.css";
 
 export type ButtonProps = {
-  type: "button" | "submit";
+  type?: "button" | "submit";
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   children?: React.ReactNode;
   bg?: string;

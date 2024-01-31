@@ -59,3 +59,10 @@
   color: #555;
   margin-bottom: 10px;
 }
+
+.skeleton .frame .img {
+  height: 500px;
+}
+.skeleton .writter {
+  height: 40px;
+}

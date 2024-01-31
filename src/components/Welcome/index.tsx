@@ -1,12 +1,10 @@
+"use client";
+import { useUser } from "@/context/AuthContext";
 import styles from "./style.module.css";
 import { getUserName } from "@/app/util/getUserName";
-import { getUser } from "@/services/authServer";
 
-export default async function Welcome() {
-  const {
-    data: { user },
-    error,
-  } = await getUser();
+export default function Welcome() {
+  const { user } = useUser();
   return (
     <div>
       {!user ? (
