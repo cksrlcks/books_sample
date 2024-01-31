@@ -1,15 +1,13 @@
 "use client";
-import { likes } from "@/types/book";
+import { Book, likes } from "@/types/book";
 import styles from "./like.module.css";
 import useSWR, { mutate } from "swr";
 import { useUser } from "@/context/AuthContext";
-export default function ActionBar({ book_id }: { book_id: string }) {
+import { useRouter } from "next/navigation";
+export default function ActionBar({ book }: { book: Book }) {
   const { user } = useUser();
-  const { data: likes, isLoading } = useSWR<likes[] | null>(
-    `/api/like/${book_id}`
-  );
-  const liked = user && likes?.find((item) => item.user_id == user.id);
-
+  const router = useRouter();
+  const liked = user && book.likes?.find((item) => item.user_id == user.id);
   const handleLike = async () => {
     if (!user) {
       alert("로그인이 필요합니다.");
@@ -18,7 +16,7 @@ export default function ActionBar({ book_id }: { book_id: string }) {
     if (!liked) {
       await fetch("/api/like", {
         method: "POST",
-        body: JSON.stringify({ book_id, user_id: user.id }),
+        body: JSON.stringify({ book_id: book.id, user_id: user.id }),
       });
     } else {
       await fetch("/api/like", {
@@ -27,7 +25,7 @@ export default function ActionBar({ book_id }: { book_id: string }) {
       });
     }
 
-    mutate(`/api/like/${book_id}`);
+    router.refresh();
   };
   return (
     <div>
@@ -35,7 +33,7 @@ export default function ActionBar({ book_id }: { book_id: string }) {
         className={`${styles.like} ${liked ? styles.on : styles.off}`}
         onClick={handleLike}
       >
-        좋아요 {likes?.length || ""}
+        좋아요 {book.likes?.length || ""}
       </button>
     </div>
   );
