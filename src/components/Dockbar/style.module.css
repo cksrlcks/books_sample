@@ -8,16 +8,20 @@
   background: #fff;
   border-top: 1px solid #eee;
 }
-.nav ul {
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
-  text-align: center;
+.navwrapper {
   max-width: 600px;
   margin: 0 auto;
+  position: relative;
+}
+.nav ul {
+  display: flex;
+  justify-content: space-evenly;
+  list-style: none;
+  text-align: center;
+  width: 100%;
 }
 .nav li {
-  width: 30%;
+  width: 33.333%;
 }
 .nav li a {
   opacity: 0.3;
@@ -31,4 +35,30 @@
 .nav li .active {
   opacity: 1;
   font-weight: 700;
+}
+
+.pin {
+  width: 33.333%;
+  position: absolute;
+  top: -1px;
+  display: flex;
+  justify-content: center;
+  transition: left 0.2s ease;
+}
+
+.pin .bar {
+  display: block;
+  background: #000;
+  width: 60px;
+  height: 3px;
+}
+
+.pin.index-0 {
+  left: 0;
+}
+.pin.index-1 {
+  left: 33.333%;
+}
+.pin.index-2 {
+  left: 66.666%;
 }

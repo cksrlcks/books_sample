@@ -68,7 +68,7 @@ export default function Singup() {
           />
           <Input
             type="text"
-            name="email"
+            name="username"
             label="이름"
             value={formData.username}
             onChange={handleChange}
