@@ -1,11 +1,5 @@
 "use client";
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styles from "./style.module.css";
 import Book from "../BookCard";
 import { RecentBook } from "@/types/book";
@@ -14,6 +8,7 @@ import Skeleton from "../BookCard/Skeleton";
 import { useInView } from "react-intersection-observer";
 
 export default function BookList() {
+  const [isLoadMore, setIsLoadMore] = useState(false);
   const limit = 4;
   const getKey = (pageIndex: number, prevData: RecentBook[]) => {
     if (prevData && !prevData.length) return null;
@@ -22,7 +17,6 @@ export default function BookList() {
   };
   const { data, error, isLoading, isValidating, mutate, size, setSize } =
     useSWRInfinite<RecentBook[]>(getKey);
-
   const items = useMemo(() => {
     const array: RecentBook[] = [];
     if (data) {
@@ -70,7 +64,7 @@ export default function BookList() {
           ))}
         </>
       )}
-      <div ref={ref}></div>
+      <div ref={ref} style={{ width: "100%", height: "30px" }}></div>
     </div>
   );
 }
