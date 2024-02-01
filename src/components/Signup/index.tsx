@@ -1,6 +1,5 @@
 "use client";
 import BackButton from "@/components/BackButton";
-import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Inner from "@/components/Inner";
 import { translateErrorMessage } from "@/lib/supabase/errorMessage";
@@ -8,34 +7,56 @@ import { useUser } from "@/context/AuthContext";
 import styles from "./style.module.css";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useState } from "react";
+
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .email("정확한 이메일을 입력해주세요")
+    .required("이메일을 입력해주세요"),
+  password: yup
+    .string()
+    .min(6, "비밀번호는 최소6자이상으로 해주세요")
+    .required("비밀번호를 입력해주세요"),
+  passwordConfirm: yup
+    .string()
+    .oneOf([yup.ref("password")], "비밀번호를 똑같이 입력해주세요"),
+  username: yup
+    .string()
+    .min(2, "최소 2자 이상으로 적어주세요")
+    .required("닉네임을 입력해주세요"),
+});
+
+type FormData = yup.InferType<typeof schema>;
 
 export default function Singup() {
-  const { signUp } = useUser();
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const { signUp } = useUser();
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    username: "",
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: yupResolver(schema),
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
+  const onSubmit: SubmitHandler<FormData> = async ({
+    email,
+    password,
+    username,
+  }) => {
     const { data, error } = await signUp({
-      email: formData.email,
-      password: formData.password,
-      username: formData.username,
+      email: email,
+      password: password,
+      username: username,
     });
 
     if (error) {
-      setLoading(false);
       setError(translateErrorMessage(error.message));
     }
     if (data.user) {
@@ -48,33 +69,29 @@ export default function Singup() {
       <BackButton />
       <Inner>
         <div className={styles.pageTitle}>회원가입 페이지</div>
-        {error && <div>{error}</div>}
-        <form onSubmit={handleSubmit} className={styles.form}>
+        {error && <div className={styles.formError}>{error}</div>}
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
           <Input
-            type="text"
-            name="email"
             label="이메일"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="이메일을 입력해주세요"
+            register={register("email")}
+            error={errors.email}
           />
           <Input
             label="비밀번호"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="비밀번호를 입력해주세요"
+            register={register("password")}
+            error={errors.password}
           />
           <Input
-            type="text"
-            name="username"
-            label="이름"
-            value={formData.username}
-            onChange={handleChange}
-            placeholder="이름을 입력해주세요"
+            label="비밀번호확인"
+            register={register("passwordConfirm")}
+            error={errors.passwordConfirm}
           />
-          {loading ? (
+          <Input
+            label="이름"
+            register={register("username")}
+            error={errors.username}
+          />
+          {isSubmitting ? (
             "회원가입 진행중..."
           ) : (
             <Button type="submit">회원가입</Button>

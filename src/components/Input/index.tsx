@@ -1,44 +1,23 @@
 import { ChangeEvent } from "react";
 import styles from "./style.module.css";
+import { FieldError, UseFormRegisterReturn } from "react-hook-form";
 
-interface InputProps {
-  type: "text" | "number" | "email" | "password";
+type Props = {
   label: string;
-  value: string | number;
-  name: string;
-  placeholder: string;
-  error?: string | null;
-  disabled?: boolean;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-}
+  register?: UseFormRegisterReturn;
+  error?: FieldError;
+};
 
-export default function Input({
-  type,
-  label,
-  value,
-  name,
-  placeholder,
-  error,
-  disabled,
-  onChange,
-}: InputProps) {
+export default function Input({ label, register, error }: Props) {
   return (
     <div className={styles.inputWrapper}>
       <label htmlFor={label} className={styles.label}>
         {label}
       </label>
       <div className={styles.input}>
-        <input
-          type={type}
-          id={label}
-          value={value}
-          name={name}
-          placeholder={placeholder}
-          onChange={onChange}
-          disabled={disabled}
-        />
+        <input {...register} />
       </div>
-      {error && <p className={styles.error}>{error}</p>}
+      {error?.message}
     </div>
   );
 }

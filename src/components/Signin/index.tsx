@@ -1,6 +1,6 @@
 "use client";
+
 import BackButton from "@/components/BackButton";
-import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Inner from "@/components/Inner";
 import { useUser } from "@/context/AuthContext";
@@ -8,29 +8,43 @@ import { FcGoogle } from "react-icons/fc";
 import styles from "./style.module.css";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { translateErrorMessage } from "@/lib/supabase/errorMessage";
+import { useState } from "react";
+
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .email("정확한 이메일을 입력해주세요")
+    .required("이메일을 입력해주세요"),
+  password: yup.string().required("비밀번호를 입력해주세요"),
+});
+
+type FormData = yup.InferType<typeof schema>;
 
 export default function Signin() {
+  const [error, setError] = useState<string | null>(null);
   const { signInWithPassword, signInWithGoogle } = useUser();
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: yupResolver(schema),
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const onSubmit: SubmitHandler<FormData> = async ({ email, password }) => {
     const { data, error } = await signInWithPassword({
-      email: formData.email,
-      password: formData.password,
+      email: email,
+      password: password,
     });
-
+    console.log(error);
     if (error) {
-      alert("로그인을 실패했습니다.");
+      setError(translateErrorMessage(error.message));
     }
     if (data.user) {
       router.replace("/mypage");
@@ -48,24 +62,23 @@ export default function Signin() {
           <FcGoogle /> <span className={styles.text}>구글로그인하기</span>
         </button>
         <div className={styles.hr} />
-        <form onSubmit={handleSubmit} className={styles.form}>
+        {error && <div className={styles.formError}>{error}</div>}
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
           <Input
-            type="text"
-            label="아이디"
-            value={formData.email}
-            name="email"
-            placeholder="아이디를 입력해주세요"
-            onChange={handleChange}
+            label="이메일"
+            register={register("email")}
+            error={errors.email}
           />
           <Input
-            type="password"
             label="비밀번호"
-            value={formData.password}
-            name="password"
-            placeholder="비밀번호를 입력해주세요"
-            onChange={handleChange}
+            register={register("password")}
+            error={errors.password}
           />
-          <Button type="submit">로그인</Button>
+          {isSubmitting ? (
+            <div>로그인중입니다...</div>
+          ) : (
+            <Button type="submit">로그인</Button>
+          )}
         </form>
       </Inner>
     </>

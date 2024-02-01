@@ -3,3 +3,13 @@
   font-weight: 700;
   margin-bottom: 1em;
 }
+
+.formError {
+  background: rgb(255, 215, 222);
+  padding: 1em;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgb(224, 23, 57);
+  margin-bottom: 2em;
+}

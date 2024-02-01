@@ -32,7 +32,7 @@ export const translateErrorMessage = (originMessage: string) => {
       translated = "비밀번호는 최소 6자리 이상이여야 합니다.";
       break;
     case "Invalid login credentials":
-      translated = "";
+      translated = "로그인을 실패했습니다. 아이디와 비밀번호를 확인해주세요.";
       break;
   }
 

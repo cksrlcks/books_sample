@@ -7,11 +7,6 @@ export default async function BookPage() {
     <Inner>
       <PageTitle name="책" />
       <FakeSearchButton placeholder="책제목이나 저자이름으로 검색해보세요" />
-      <br />
-      <br />
-      <br />
-      <div>책리스트 (인피니티 스크롤로 만들기)</div>
-      <br />
       <BookList />
     </Inner>
   );

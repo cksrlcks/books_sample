@@ -2,18 +2,38 @@ import { createClient } from "@/lib/supabase/server";
 import { User } from "@/types/user";
 import { cookies } from "next/headers";
 
-export const getBooks = () => {
+type paginationType = {
+  limit: string;
+  offset: string;
+};
+export const getBooks = ({ limit, page }: { limit: string; page: string }) => {
   const supabase = createClient(cookies());
-  return supabase
-    .from("books")
-    .select(
-      `
+  if (limit && page) {
+    const start = Number(page) * Number(limit);
+    const end = start + Number(limit) - 1;
+    return supabase
+      .from("books")
+      .select(
+        `
         *,
         likes(*),
         comments(*)
       `
-    )
-    .order("created_at", { ascending: false });
+      )
+      .order("created_at", { ascending: false })
+      .range(start, end);
+  } else {
+    return supabase
+      .from("books")
+      .select(
+        `
+        *,
+        likes(*),
+        comments(*)
+      `
+      )
+      .order("created_at", { ascending: false });
+  }
 };
 
 export const getRecentBooks = () => {
