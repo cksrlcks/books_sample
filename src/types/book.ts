@@ -1,33 +1,10 @@
-export type Book = {
-  id: string;
-  name: string;
-  created_at: string;
-  description?: string;
-  cover_img_url: string;
-  likes: likes[];
-  comments: comments[];
-  writter: string;
-  publisher: string;
-};
+import { Database, Tables, Enums } from "./supabase";
 
-export type likes = {
-  id: string;
-  user_id: string;
-  username: string;
-  created_at: string;
-  book_Id: string;
-  email: string;
-};
+export type Book = Tables<"books">;
 
-export type comments = {
-  id: string;
-  user_id: string;
-  username: string;
-  comment: string;
-  created_at: string;
-  book_Id: string;
-  email: string;
-};
+export type likes = Tables<"likes">;
+
+export type comments = Tables<"comments">;
 
 export type RecentBook = Omit<Book, "comments" | "likes"> & {
   likes: [{ count: number }];

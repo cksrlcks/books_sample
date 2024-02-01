@@ -28,12 +28,11 @@ export default function Book({
         </figure>
         <div className={styles.action}>
           <div className={`${styles.bookIcon} ${styles.like}`}>
-            <FcLike />{" "}
-            <span className={styles.count}>{item.likes[0].count}</span>
+            <FcLike /> <span className={styles.count}>{item.likes.length}</span>
           </div>
           <div className={`${styles.bookIcon} ${styles.comment}`}>
             <FcComments />{" "}
-            <span className={styles.count}>{item.comments[0].count}</span>
+            <span className={styles.count}>{item.comments.length}</span>
           </div>
         </div>
         <div className={styles.bookName}>{item.name}</div>

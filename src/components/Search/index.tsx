@@ -2,7 +2,7 @@
 import BackButton from "@/components/BackButton";
 import Book from "@/components/BookCard";
 import SearchBook from "@/components/SearchBar";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import styles from "./style.module.css";
 import Inner from "@/components/Inner";
 import { RecentBook } from "@/types/book";
@@ -21,7 +21,6 @@ export default function SearchPage() {
     setResult(data);
     setLoading(false);
   };
-  console.log(result);
   return (
     <>
       <Inner>

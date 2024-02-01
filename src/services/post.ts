@@ -8,10 +8,10 @@ export const getBooks = () => {
     .from("books")
     .select(
       `
-  *,
-  likes(count),
-  comments(count)
-  `
+        *,
+        likes(*),
+        comments(*)
+      `
     )
     .order("created_at", { ascending: false });
 };
@@ -22,9 +22,9 @@ export const getRecentBooks = () => {
     .from("books")
     .select(
       `
-      *,
-      likes(count),
-      comments(count)
+        *,
+        likes(*),
+        comments(*)
       `
     )
     .order("created_at", { ascending: false })
@@ -36,8 +36,8 @@ export const getMostLikedBooks = () => {
   return supabase.from("books").select(
     `
       *,
-      likes(count),
-      comments(count)
+      likes(*),
+      comments(*)
       `
   );
 };
@@ -47,8 +47,8 @@ export const getMostCommentedBooks = () => {
   return supabase.from("books").select(
     `
       *,
-      likes(count),
-      comments(count)
+      likes(*),
+      comments(*)
       `
   );
 };
@@ -59,9 +59,9 @@ export const getBook = (bookId: string) => {
     .from("books")
     .select(
       `
-    *,
-    likes(*),
-    comments(*)
+      *,
+      likes(*),
+      comments(*)
     `
     )
     .eq("id", bookId)
@@ -72,8 +72,8 @@ export const setLike = ({
   book_id,
   user_id,
 }: {
-  book_id: string;
-  user_id: User;
+  book_id: number;
+  user_id: string;
 }) => {
   const supabase = createClient(cookies());
   return supabase.from("likes").insert({
@@ -91,7 +91,7 @@ export const getLike = ({
   book_id,
   user_id,
 }: {
-  book_id: string;
+  book_id: number;
   user_id: string;
 }) => {
   const supabase = createClient(cookies());
@@ -104,10 +104,10 @@ export const search = (sw: string) => {
     .from("books")
     .select(
       `
-*,
-likes(count),
-comments(count)
-`
+        *,
+        likes(*),
+        comments(*)
+      `
     )
     .ilike("name_writter", `%${sw}%`)
     .order("created_at", { ascending: false });

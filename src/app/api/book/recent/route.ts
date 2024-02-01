@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     }
 
     const sortedData = data
-      .sort((a, b) => b.likes[0].count - a.likes[0].count)
+      .sort((a, b) => b.likes.length - a.likes.length)
       .slice(0, 5);
     return NextResponse.json(sortedData);
   }
@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
     }
 
     const sortedData = data
-      .sort((a, b) => b.comments[0].count - a.comments[0].count)
+      .sort((a, b) => b.comments.length - a.comments.length)
       .slice(0, 5);
     return NextResponse.json(sortedData);
   }

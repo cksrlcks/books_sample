@@ -18,7 +18,11 @@ export default function BookDetail({ book }: { book: Book }) {
       </div>
       <>
         <figure className={styles.frame}>
-          <img src={book.cover_img_url} alt={book.name} />
+          {book.cover_img_url ? (
+            <img src={book.cover_img_url} alt={book.name} />
+          ) : (
+            <div>empty</div>
+          )}
         </figure>
         <Inner>
           <ActionBar book_id={book.id} />
