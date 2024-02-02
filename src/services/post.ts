@@ -1,10 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
 
-type paginationType = {
-  limit: string;
-  offset: string;
-};
 export const getBooks = ({ limit, page }: { limit: string; page: string }) => {
   const supabase = createClient(cookies());
   if (limit && page) {
@@ -132,7 +128,24 @@ export const search = (sw: string) => {
     .order("created_at", { ascending: false });
 };
 
-export const setComment = ({ book_id, user_id, username, email, comment }) => {
+export const getComment = ({ id }: { id: number }) => {
+  const supabase = createClient(cookies());
+  return supabase.from("comments").select("*").eq("book_id", id);
+};
+
+export const setComment = ({
+  book_id,
+  user_id,
+  username,
+  email,
+  comment,
+}: {
+  book_id: number;
+  user_id: string;
+  username: string;
+  email: string;
+  comment: string;
+}) => {
   const supabase = createClient(cookies());
   return supabase
     .from("comments")

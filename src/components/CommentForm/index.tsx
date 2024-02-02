@@ -47,8 +47,9 @@ export default function CommentForm({
     if (!user) {
       alert("로그인이 필요합니다.");
     }
+
     try {
-      fetch(`/api/comment/${book.id}`, {
+      await fetch(`/api/comment/${book.id}`, {
         method: "POST",
         body: JSON.stringify({
           user_id: user?.id,
@@ -56,12 +57,10 @@ export default function CommentForm({
           email: user.email,
           comment,
         }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          mutate(`/api/comment/${book.id}`);
-          handleClose();
-        });
+      });
+
+      mutate(`/api/comment/${book.id}`);
+      handleClose();
     } catch (error) {
       console.log(error);
     }

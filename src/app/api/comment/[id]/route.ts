@@ -1,17 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
-import { setComment } from "@/services/post";
+import { getComment, setComment } from "@/services/post";
 export async function GET(
   request: NextRequest,
   { params: { id } }: { params: { id: string } }
 ) {
-  const supabase = createClient(cookies());
-
-  const { data, error } = await supabase
-    .from("comments")
-    .select("*")
-    .eq("book_id", id);
+  const { data, error } = await getComment({
+    id: Number(id),
+  });
   if (error) {
     return new Response("fail", { status: 400 });
   }
@@ -25,7 +22,7 @@ export async function POST(
 ) {
   const { user_id, username, email, comment } = await request.json();
   const { data, error } = await setComment({
-    book_id: id,
+    book_id: Number(id),
     user_id,
     username,
     email,
