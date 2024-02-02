@@ -6,7 +6,7 @@ export default function FakeSearchButton({
   placeholder: string;
 }) {
   return (
-    <Link href="/search" className={styles.button}>
+    <Link href="/book/search" className={styles.button}>
       {placeholder}
     </Link>
   );

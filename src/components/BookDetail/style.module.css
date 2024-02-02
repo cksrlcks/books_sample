@@ -1,6 +1,9 @@
 .header {
   margin-bottom: 20px;
 }
+.frameWrapper {
+  padding: 0 20px;
+}
 .frame {
   text-align: center;
   background: #f3f3f3;
@@ -8,8 +11,8 @@
   margin-bottom: 20px;
 }
 .frame img {
-  width: 100%;
-  height: auto;
+  width: auto;
+  height: 300px;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
 }
 .bookName {
@@ -59,10 +62,37 @@
   color: #555;
   margin-bottom: 10px;
 }
-
+.actionBar {
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.actionBar > * {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 700;
+}
+.commentBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  width: 100%;
+  height: 40px;
+  background: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
 .skeleton .frame .img {
-  height: 500px;
+  height: 300px;
 }
 .skeleton .writter {
   height: 40px;
+}
+
+@media screen and (max-width: 600px) {
+  .frameWrapper {
+    padding: 0;
+  }
 }

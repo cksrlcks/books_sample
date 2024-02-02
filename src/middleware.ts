@@ -53,12 +53,16 @@ export async function middleware(request: NextRequest) {
       },
     }
   );
+  const { data, error } = await supabase.auth.getUser();
 
-  await supabase.auth.getUser();
-
+  if (error || !data.user) {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.searchParams.set("alert", "로그인이 필요합니다.");
+    return NextResponse.redirect(new URL("/signin?alert=fh", redirectUrl));
+  }
   return response;
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/comment"],
 };

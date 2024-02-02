@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server";
-import { User } from "@/types/user";
 import { cookies } from "next/headers";
 
 type paginationType = {
@@ -131,4 +130,11 @@ export const search = (sw: string) => {
     )
     .ilike("name_writter", `%${sw}%`)
     .order("created_at", { ascending: false });
+};
+
+export const setComment = ({ book_id, user_id, username, email, comment }) => {
+  const supabase = createClient(cookies());
+  return supabase
+    .from("comments")
+    .insert({ book_id, user_id, username, email, comment });
 };

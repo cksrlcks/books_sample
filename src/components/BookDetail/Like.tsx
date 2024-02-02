@@ -4,9 +4,15 @@ import styles from "./like.module.css";
 import { useUser } from "@/context/AuthContext";
 import { useState } from "react";
 import useSWR, { mutate } from "swr";
-export default function ActionBar({ book_id }: { book_id: number }) {
+import { User } from "@/types/user";
+export default function ActionBar({
+  user,
+  book_id,
+}: {
+  user: User | null;
+  book_id: number;
+}) {
   const [likeLoading, setLikeLoading] = useState<boolean>(false);
-  const { user } = useUser();
 
   const { data: likes, isLoading } = useSWR<likes[]>(`/api/like/${book_id}`);
   const liked =
@@ -55,14 +61,12 @@ export default function ActionBar({ book_id }: { book_id: number }) {
   };
 
   return (
-    <div>
-      <button
-        className={`${styles.like} ${liked.length ? styles.on : styles.off}`}
-        onClick={handleLike}
-        disabled={likeLoading}
-      >
-        좋아요 {likes?.length}
-      </button>
-    </div>
+    <button
+      className={`${styles.like} ${liked.length ? styles.on : styles.off}`}
+      onClick={handleLike}
+      disabled={likeLoading}
+    >
+      좋아요 {likes?.length}
+    </button>
   );
 }
