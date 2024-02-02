@@ -17,6 +17,11 @@ export default function BookList() {
   };
   const { data, error, isLoading, isValidating, mutate, size, setSize } =
     useSWRInfinite<RecentBook[]>(getKey);
+  const isLoadingMore =
+    isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
+  const isEmpty = data?.[0]?.length === 0;
+  const isReachingEnd =
+    isEmpty || (data && data[data.length - 1]?.length < limit);
   const items = useMemo(() => {
     const array: RecentBook[] = [];
     if (data) {
@@ -35,36 +40,40 @@ export default function BookList() {
   }, [inView]);
 
   return (
-    <div className={styles.bookList}>
-      {isLoading && (
-        <>
-          <div className={styles.item}>
-            <Skeleton />
-          </div>
-          <div className={styles.item}>
-            <Skeleton />
-          </div>
-          <div className={styles.item}>
-            <Skeleton />
-          </div>
-          <div className={styles.item}>
-            <Skeleton />
-          </div>
-          <div className={styles.item}>
-            <Skeleton />
-          </div>
-        </>
-      )}
-      {items && (
-        <>
-          {items?.map((book) => (
-            <div className={styles.item} key={book.id}>
-              <Book item={book} desc="show" />
+    <>
+      <div className={styles.bookList}>
+        {isLoading && (
+          <>
+            <div className={styles.item}>
+              <Skeleton />
             </div>
-          ))}
-        </>
-      )}
+            <div className={styles.item}>
+              <Skeleton />
+            </div>
+            <div className={styles.item}>
+              <Skeleton />
+            </div>
+            <div className={styles.item}>
+              <Skeleton />
+            </div>
+            <div className={styles.item}>
+              <Skeleton />
+            </div>
+          </>
+        )}
+
+        {items && (
+          <>
+            {items?.map((book) => (
+              <div className={styles.item} key={book.id}>
+                <Book item={book} desc="show" />
+              </div>
+            ))}
+          </>
+        )}
+      </div>
+      <div>{isReachingEnd ? "모두 가져왔습니다." : ""}</div>
       <div ref={ref} style={{ width: "100%", height: "30px" }}></div>
-    </div>
+    </>
   );
 }
