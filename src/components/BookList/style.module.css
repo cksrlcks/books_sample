@@ -7,3 +7,11 @@
 .bookList .item {
   width: calc(50% - 10px);
 }
+
+.done {
+  margin-top: 10px;
+  padding: 1em;
+  text-align: center;
+  font-size: 15px;
+  color: #888;
+}

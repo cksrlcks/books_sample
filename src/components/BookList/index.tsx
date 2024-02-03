@@ -72,7 +72,9 @@ export default function BookList() {
           </>
         )}
       </div>
-      <div>{isReachingEnd ? "모두 가져왔습니다." : ""}</div>
+      {isReachingEnd && (
+        <div className={styles.done}>책을 모두 불러왔습니다.</div>
+      )}
       <div ref={ref} style={{ width: "100%", height: "30px" }}></div>
     </>
   );
