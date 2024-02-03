@@ -78,11 +78,13 @@ export default function Singup() {
           />
           <Input
             label="비밀번호"
+            type="password"
             register={register("password")}
             error={errors.password}
           />
           <Input
             label="비밀번호확인"
+            type="password"
             register={register("passwordConfirm")}
             error={errors.passwordConfirm}
           />

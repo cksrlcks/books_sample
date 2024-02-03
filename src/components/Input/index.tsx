@@ -6,16 +6,22 @@ type Props = {
   label: string;
   register?: UseFormRegisterReturn;
   error?: FieldError;
+  type?: string;
 };
 
-export default function Input({ label, register, error }: Props) {
+export default function Input({
+  label,
+  register,
+  error,
+  type = "text",
+}: Props) {
   return (
     <div className={styles.inputWrapper}>
       <label htmlFor={label} className={styles.label}>
         {label}
       </label>
       <div className={styles.input}>
-        <input {...register} />
+        <input {...register} type={type} />
       </div>
       {error?.message}
     </div>

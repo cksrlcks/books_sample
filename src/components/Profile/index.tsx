@@ -6,7 +6,7 @@ import BeforeLogin from "../BeforeLogin";
 import { useUser } from "@/context/AuthContext";
 import { getUserName } from "@/app/util/getUserName";
 import ActivityBar from "../Activity";
-import Avvvatars from "avvvatars-react";
+import Avatar from "../Avatar";
 
 export default function Profile() {
   const router = useRouter();
@@ -23,19 +23,7 @@ export default function Profile() {
     <>
       {user ? (
         <>
-          <figure className={styles.avatarFrame}>
-            {avatar ? (
-              <div className={styles.avatar}>
-                <img src={avatar} alt={username} />
-              </div>
-            ) : (
-              <Avvvatars
-                value={user.email || ""}
-                displayValue={username[0]}
-                size={70}
-              />
-            )}
-          </figure>
+          <Avatar avatar={avatar} username={username} />
           <div className={styles.name}>{username}님 안녕하세요.</div>
           <div className={styles.email}>{user.email}</div>
           <ActivityBar userId={user.id} />
