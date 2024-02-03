@@ -151,3 +151,8 @@ export const setComment = ({
     .from("comments")
     .insert({ book_id, user_id, username, email, comment });
 };
+
+export const deleteComment = (id: string) => {
+  const supabase = createClient(cookies());
+  return supabase.from("comments").delete().eq("id", id);
+};

@@ -1,8 +1,7 @@
-import useSWR from "swr";
 import styles from "./style.module.css";
 import { BookData } from "@/types/book";
 import { User } from "@/types/user";
-
+import DeleteButton from "./DeleteButton";
 export default function Comments({
   user,
   book,
@@ -12,13 +11,24 @@ export default function Comments({
 }) {
   const comments = book.comments;
   if (!comments.length) {
-    return <div>작성된 코멘트가 없습니다.</div>;
+    return <div className={styles.empty}>작성된 코멘트가 없습니다.</div>;
   }
   return (
-    <div>
+    <div className={styles.list}>
       {comments.map((comment) => (
-        <div key={comment.id}>
-          {comment.username} : {comment.comment}
+        <div key={comment.id} className={styles.comment}>
+          <div className={styles.header}>
+            <div className={styles.user}>
+              <span className={styles.name}>{comment.username}</span>
+              <span className={styles.email}>({comment.email})</span>
+            </div>
+            <div className={styles.control}>
+              {user?.id === comment.user_id && (
+                <DeleteButton book_id={book.id} comment_id={comment.id} />
+              )}
+            </div>
+          </div>
+          <div className={styles.content}>{comment.comment}</div>
         </div>
       ))}
     </div>

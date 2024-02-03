@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
-import { getComment, setComment } from "@/services/post";
+import { deleteComment, getComment, setComment } from "@/services/post";
 export async function GET(
   request: NextRequest,
   { params: { id } }: { params: { id: string } }
@@ -28,6 +28,18 @@ export async function POST(
     email,
     comment,
   });
+
+  if (error) {
+    return new Response("fail", { status: 400 });
+  }
+
+  return NextResponse.json(data);
+}
+
+export async function DELETE(req: Request) {
+  const { comment_id } = await req.json();
+
+  const { data, error } = await deleteComment(comment_id);
 
   if (error) {
     return new Response("fail", { status: 400 });
