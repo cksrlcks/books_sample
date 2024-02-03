@@ -6,12 +6,7 @@ import Welcome from "@/components/Welcome";
 export default async function Home() {
   return (
     <Inner>
-      <section className={styles.section}>
-        <div>
-          <div className={styles.welcomeTitle}>책방에 오신것을 환영합니다.</div>
-          <Welcome />
-        </div>
-      </section>
+      <Welcome />
       {/* <section className={styles.section}>
         <div className={styles.title}>공지사항</div>
         {recentNotice.map((notice) => (
