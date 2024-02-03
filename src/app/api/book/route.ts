@@ -13,7 +13,6 @@ export async function GET(request: NextRequest) {
   });
 
   if (error) {
-    //console.log(error);
     return new Response("fail", { status: 400 });
   }
 

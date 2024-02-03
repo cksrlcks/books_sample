@@ -49,9 +49,10 @@ export default function CommentForm({
     }
 
     try {
-      await fetch(`/api/comment/${book.id}`, {
+      await fetch(`/api/comment`, {
         method: "POST",
         body: JSON.stringify({
+          id: book.id,
           user_id: user?.id,
           username: getUserName(user),
           email: user.email,
