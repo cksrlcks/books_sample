@@ -3,6 +3,7 @@ import "../styles/global.css";
 import SWRConfigContext from "../context/SWRConfigContext";
 import { AuthContextProvider } from "@/context/AuthContext";
 import { Metadata } from "next";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const roboto = Roboto({ weight: ["400", "500", "700"], subsets: ["latin"] });
 
@@ -15,6 +16,7 @@ export default function layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
       <body className={`app-layout ${roboto.className}`}>
+        <ScrollToTop />
         <div className="app-inner">
           <AuthContextProvider>
             <SWRConfigContext>{children}</SWRConfigContext>

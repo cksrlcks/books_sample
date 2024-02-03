@@ -42,7 +42,6 @@ export default function Signin() {
       email: email,
       password: password,
     });
-    console.log(error);
     if (error) {
       setError(translateErrorMessage(error.message));
     }

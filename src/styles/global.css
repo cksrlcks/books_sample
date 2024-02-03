@@ -100,15 +100,14 @@ a {
     color-scheme: dark;
   }
 }
-.app-layout {
-  padding-top: 30px;
-}
+
 .app-inner {
   max-width: 500px;
   min-height: 100vh;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  padding-top: 30px;
 }
 .app-body {
   flex: 1;
