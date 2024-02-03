@@ -26,7 +26,7 @@
 .nav li a {
   opacity: 0.3;
   font-size: 13px;
-  padding: 2em 1em;
+  padding: 1.6em 1em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -64,4 +64,68 @@
 }
 .pin.index-2 {
   left: 66.666%;
+}
+
+@media screen and (min-width: 600px) {
+  .nav {
+    bottom: auto;
+    left: 50%;
+    right: auto;
+    top: 24px;
+    width: 100px;
+    transform: translateX(-400px);
+    background: none;
+    border: none;
+  }
+
+  .nav ul {
+    align-items: flex-end;
+    flex-direction: column;
+    width: 100%;
+    padding-right: 16px;
+  }
+
+  .nav li a {
+    white-space: nowrap;
+    height: 40px;
+    padding: 0;
+    font-size: 18px;
+    font-weight: 700;
+    justify-content: flex-end;
+  }
+
+  .pin {
+    width: 6px;
+    height: 40px;
+    top: 0;
+    align-items: center;
+    transition: top 0.2s ease, opacity 0.2s ease;
+  }
+  .pin.hide {
+    opacity: 0;
+  }
+
+  .pin .bar {
+    display: block;
+    background: #000;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .pin.index-0 {
+    right: 0;
+    left: auto;
+    top: 0;
+  }
+  .pin.index-1 {
+    right: 0;
+    left: auto;
+    top: 33.333%;
+  }
+  .pin.index-2 {
+    right: 0;
+    left: auto;
+    top: 66.666%;
+  }
 }

@@ -31,7 +31,6 @@ export default function Profile() {
           <div className={styles.name}>{username}님 안녕하세요.</div>
           <div className={styles.email}>{user.email}</div>
           <ActivityBar userId={user.id} />
-          <br />
           <Button onClick={handleLogout}>로그아웃</Button>
         </>
       ) : (
