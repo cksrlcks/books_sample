@@ -61,7 +61,7 @@ export default function CommentForm({
 
       handleClose();
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
 
     router.refresh();

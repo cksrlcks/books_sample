@@ -12,6 +12,16 @@ export async function middleware(request: NextRequest) {
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
+      auth: {
+        persistSession: false,
+        /* 
+        임시로 세션유지 끄기
+          upabase/ssr의 issue로 등록되어있음
+          (현재 default true로 해두면 세션만료, 로그아웃시 리프레시토큰이 없다는 오류가 뜨고있음)
+
+          공식문서에서 token을 refresh하는 로직은 supabase.auth.getUser()에 있다고 함 (여기서 제대로 리프레시를 안하는것같음)
+        */
+      },
       cookies: {
         get(name: string) {
           return request.cookies.get(name)?.value;
@@ -53,16 +63,21 @@ export async function middleware(request: NextRequest) {
       },
     }
   );
-  const { data, error } = await supabase.auth.getUser();
 
-  if (error || !data.user) {
-    const redirectUrl = request.nextUrl.clone();
-    redirectUrl.searchParams.set("alert", "로그인이 필요합니다.");
-    return NextResponse.redirect(new URL("/signin?alert=fh", redirectUrl));
-  }
+  await supabase.auth.getUser();
+
   return response;
 }
 
 export const config = {
-  matcher: ["/comment"],
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * Feel free to modify this pattern to include more paths.
+     */
+    "/((?!_next/static|_next/image|favicon.ico).*)",
+  ],
 };
