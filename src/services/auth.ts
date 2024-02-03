@@ -56,6 +56,10 @@ export const signInWithGoogle = () => {
   });
 };
 
+export const withdrawal = (user_id: string) => {
+  return supabase.auth.admin.deleteUser(user_id);
+};
+
 export const getUserActivityData = async (user_id: string) => {
   const getUserLikes = () => {
     return supabase.from("likes").select("*").eq("user_id", user_id);
