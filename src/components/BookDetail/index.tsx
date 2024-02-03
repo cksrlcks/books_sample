@@ -7,14 +7,14 @@ import BackButton from "../BackButton";
 import Inner from "../Inner";
 import LikeBar from "./Like";
 import "react-loading-skeleton/dist/skeleton.css";
-import { Book } from "@/types/book";
+import { BookData } from "@/types/book";
 import Comments from "../Comments";
 import Link from "next/link";
 import CommentForm from "@/components/CommentForm";
 import { useUser } from "@/context/AuthContext";
 register("ko", ko);
 
-export default function BookDetail({ book }: { book: Book | null }) {
+export default function BookDetail({ book }: { book: BookData | null }) {
   const [openComment, setOpenComment] = useState(false);
   const { user } = useUser();
 
@@ -51,7 +51,7 @@ export default function BookDetail({ book }: { book: Book | null }) {
         </Inner>
         <Inner>
           <div className={styles.actionBar}>
-            <LikeBar user={user} book_id={book.id} />
+            <LikeBar user={user} book={book} />
             <button
               type="button"
               className={styles.commentBtn}
@@ -76,7 +76,7 @@ export default function BookDetail({ book }: { book: Book | null }) {
         <Inner>
           <div>한줄평</div>
           <br />
-          <Comments book_id={book.id} />
+          <Comments book={book} user={user} />
         </Inner>
       </>
     </>

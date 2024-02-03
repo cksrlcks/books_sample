@@ -1,20 +1,22 @@
 "use client";
-import { likes } from "@/types/book";
+import { BookData, likes } from "@/types/book";
 import styles from "./like.module.css";
-import { useUser } from "@/context/AuthContext";
 import { useState } from "react";
 import useSWR, { mutate } from "swr";
 import { User } from "@/types/user";
+import { revalidatePath } from "next/cache";
+import { useRouter } from "next/navigation";
 export default function ActionBar({
   user,
-  book_id,
+  book,
 }: {
   user: User | null;
-  book_id: number;
+  book: BookData;
 }) {
   const [likeLoading, setLikeLoading] = useState<boolean>(false);
+  const likes = book.likes;
+  const router = useRouter();
 
-  const { data: likes, isLoading } = useSWR<likes[]>(`/api/like/${book_id}`);
   const liked =
     (user &&
       likes?.length &&
@@ -31,32 +33,15 @@ export default function ActionBar({
     if (liked.length === 0) {
       await fetch("/api/like", {
         method: "POST",
-        body: JSON.stringify({ book_id: book_id, user_id: user.id }),
-      });
-      const newLike = likes && [
-        ...likes,
-        { book_id: book_id, user_id: user.id },
-      ];
-      mutate(`/api/like/${book_id}`, {
-        optimisticData: newLike,
-        populateCache: false,
-        revalidate: true,
-        rollbackOnError: true,
+        body: JSON.stringify({ book_id: book.id, user_id: user.id }),
       });
     } else {
       await fetch("/api/like", {
         method: "DELETE",
         body: JSON.stringify({ like_id: liked[0].id }),
       });
-      const newLike = likes && likes.filter((like) => like.id !== liked[0].id);
-      mutate(`/api/like/${book_id}`, {
-        optimisticData: newLike,
-        populateCache: false,
-        revalidate: true,
-        rollbackOnError: true,
-      });
     }
-
+    router.refresh();
     setLikeLoading(false);
   };
 

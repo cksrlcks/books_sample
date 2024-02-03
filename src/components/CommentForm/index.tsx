@@ -59,11 +59,12 @@ export default function CommentForm({
         }),
       });
 
-      mutate(`/api/comment/${book.id}`);
       handleClose();
     } catch (error) {
       console.log(error);
     }
+
+    router.refresh();
   };
 
   return (
