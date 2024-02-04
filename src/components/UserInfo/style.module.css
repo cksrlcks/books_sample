@@ -22,9 +22,16 @@
   color: #888;
   letter-spacing: -0.04em;
 }
+.action {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
 
 .button {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: #eee;
   font-weight: 700;
   font-size: 13px;
@@ -33,7 +40,6 @@
   cursor: pointer;
   width: 100px;
   height: 35px;
-  margin: 0 auto;
   border: 1px solid #ddd;
   border-radius: 4px;
 }

@@ -1,7 +1,5 @@
 import { createClient } from "@/lib/supabase/client";
 
-//context api를 위한 client용 client
-//csr에서는 client 미리 만들어두고 재사용가능
 const supabase = createClient();
 
 export const signInWithPassword = ({
@@ -53,6 +51,16 @@ export const signInWithGoogle = () => {
       },
       redirectTo: `${process.env.NEXT_PUBLIC_NEXT_URL}/auth/callback`,
     },
+  });
+};
+
+export const passwordChange = ({ new_password }: { new_password: string }) => {
+  return supabase.auth.updateUser({ password: new_password });
+};
+
+export const findPassword = ({ email }: { email: string }) => {
+  return supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${process.env.NEXT_PUBLIC_NEXT_URL}/mypage/password_reset`,
   });
 };
 

@@ -1,5 +1,12 @@
 import Inner from "@/components/Inner";
+import MyList from "@/components/MyList";
+import PageTitle from "@/components/PageTitle";
 
 export default function LikedPage() {
-  return <Inner>내가좋아요, 코멘트한 책 리스트 페이지 (탭방식)</Inner>;
+  return (
+    <Inner>
+      <PageTitle name="나의 활동" />
+      <MyList />
+    </Inner>
+  );
 }

@@ -1,10 +1,8 @@
 "use client";
 
 import BackButton from "@/components/BackButton";
-import { useRouter } from "next/navigation";
 import Inner from "@/components/Inner";
 import { useUser } from "@/context/AuthContext";
-import { FcGoogle } from "react-icons/fc";
 import styles from "./style.module.css";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
@@ -14,22 +12,21 @@ import * as yup from "yup";
 import { translateErrorMessage } from "@/lib/supabase/errorMessage";
 import { useState } from "react";
 import PageTitle from "../PageTitle";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const schema = yup.object().shape({
   email: yup
     .string()
     .email("정확한 이메일을 입력해주세요")
     .required("이메일을 입력해주세요"),
-  password: yup.string().required("비밀번호를 입력해주세요"),
 });
 
 type FormData = yup.InferType<typeof schema>;
 
 export default function Signin() {
-  const [error, setError] = useState<string | null>(null);
-  const { signInWithPassword, signInWithGoogle, findPassword } = useUser();
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const { findPassword } = useUser();
 
   const {
     register,
@@ -39,29 +36,23 @@ export default function Signin() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<FormData> = async ({ email, password }) => {
-    const { data, error } = await signInWithPassword({
+  const onSubmit: SubmitHandler<FormData> = async ({ email }) => {
+    const { data, error } = await findPassword({
       email: email,
-      password: password,
     });
     if (error) {
       setError(translateErrorMessage(error.message));
+      return;
     }
-    if (data.user) {
-      router.replace("/mypage");
-    }
+    alert(`${email}로 비밀번호 재설정 메일을 보냈습니다.`);
+    router.replace("/");
   };
 
-  const handleGoogleSignin = async () => await signInWithGoogle();
   return (
     <>
       <BackButton path="/mypage" />
       <Inner>
-        <PageTitle name="로그인" heading={3} />
-        <button onClick={handleGoogleSignin} className={styles.google}>
-          <FcGoogle /> <span className={styles.text}>구글로그인하기</span>
-        </button>
-        <div className={styles.hr} />
+        <PageTitle name="비밀번호 찾기" heading={3} />
         {error && <div className={styles.formError}>{error}</div>}
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
           <Input
@@ -69,21 +60,14 @@ export default function Signin() {
             register={register("email")}
             error={errors.email}
           />
-          <Input
-            label="비밀번호"
-            type="password"
-            register={register("password")}
-            error={errors.password}
-          />
+
           {isSubmitting ? (
-            <div>로그인중입니다...</div>
+            <div>처리중...</div>
           ) : (
-            <Button type="submit">로그인</Button>
+            <Button type="submit">비밀번호 재설정 메일보내기</Button>
           )}
-          <Link href="/mypage/find" className={styles.textButton}>
-            비밀번호 찾기
-          </Link>
         </form>
+        <button></button>
       </Inner>
     </>
   );

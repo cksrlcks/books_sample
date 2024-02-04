@@ -4,6 +4,7 @@ import { useUser } from "@/context/AuthContext";
 import Avatar from "../Avatar";
 import styles from "./style.module.css";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function UserInfo() {
   const router = useRouter();
@@ -11,6 +12,8 @@ export default function UserInfo() {
   const avatar = user && user.user_metadata?.avatar_url;
   const username = user && getUserName(user);
   const date = user && new Date(user.created_at);
+
+  const handlePasswordChange = async () => {};
 
   const handleWithdrawal = async () => {
     if (
@@ -41,9 +44,16 @@ export default function UserInfo() {
           </span>
         </div>
       )}
-      <button className={styles.button} onClick={handleWithdrawal}>
-        회원탈퇴
-      </button>
+      <div className={styles.action}>
+        {user?.app_metadata.provider === "email" && (
+          <Link href="/mypage/password" className={styles.button}>
+            비밀번호변경
+          </Link>
+        )}
+        <button className={styles.button} onClick={handleWithdrawal}>
+          회원탈퇴
+        </button>
+      </div>
     </>
   );
 }

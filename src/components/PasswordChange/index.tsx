@@ -14,10 +14,6 @@ import { useState } from "react";
 import PageTitle from "../PageTitle";
 
 const schema = yup.object().shape({
-  email: yup
-    .string()
-    .email("정확한 이메일을 입력해주세요")
-    .required("이메일을 입력해주세요"),
   password: yup
     .string()
     .min(6, "비밀번호는 최소6자이상으로 해주세요")
@@ -25,17 +21,13 @@ const schema = yup.object().shape({
   passwordConfirm: yup
     .string()
     .oneOf([yup.ref("password")], "비밀번호를 똑같이 입력해주세요"),
-  username: yup
-    .string()
-    .min(2, "최소 2자 이상으로 적어주세요")
-    .required("닉네임을 입력해주세요"),
 });
 
 type FormData = yup.InferType<typeof schema>;
 
-export default function Singup() {
+export default function PasswordChange() {
   const [error, setError] = useState<string | null>(null);
-  const { signUp } = useUser();
+  const { passwordChange } = useUser();
   const router = useRouter();
 
   const {
@@ -46,22 +38,16 @@ export default function Singup() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<FormData> = async ({
-    email,
-    password,
-    username,
-  }) => {
-    const { data, error } = await signUp({
-      email: email,
-      password: password,
-      username: username,
+  const onSubmit: SubmitHandler<FormData> = async ({ password }) => {
+    const { data, error } = await passwordChange({
+      new_password: password,
     });
 
     if (error) {
       setError(translateErrorMessage(error.message));
     }
     if (data.user) {
-      router.push("/");
+      router.push("/mypage");
     }
   };
 
@@ -69,14 +55,9 @@ export default function Singup() {
     <>
       <BackButton path="/mypage" />
       <Inner>
-        <PageTitle name="회원가입" heading={3} />
+        <PageTitle name="비밀번호 재설정" heading={3} />
         {error && <div className={styles.formError}>{error}</div>}
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-          <Input
-            label="이메일"
-            register={register("email")}
-            error={errors.email}
-          />
           <Input
             label="비밀번호"
             type="password"
@@ -89,15 +70,10 @@ export default function Singup() {
             register={register("passwordConfirm")}
             error={errors.passwordConfirm}
           />
-          <Input
-            label="이름"
-            register={register("username")}
-            error={errors.username}
-          />
           {isSubmitting ? (
-            "회원가입 진행중..."
+            "패스워드 변경중..."
           ) : (
-            <Button type="submit">회원가입</Button>
+            <Button type="submit">변경하기</Button>
           )}
         </form>
       </Inner>

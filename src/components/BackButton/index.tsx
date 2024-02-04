@@ -4,10 +4,16 @@ import React from "react";
 import Inner from "../Inner";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import styles from "./style.module.css";
-export default function BackButton({ mb = 30 }: { mb?: number }) {
+export default function BackButton({
+  path,
+  mb = 30,
+}: {
+  path: string;
+  mb?: number;
+}) {
   const router = useRouter();
   const handleGoBack = () => {
-    router.back();
+    router.push(path);
   };
   return (
     <Inner style={{ marginBottom: mb }}>
