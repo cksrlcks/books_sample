@@ -4,7 +4,7 @@ import SearchPage from "@/components/Search";
 export default async function Search() {
   return (
     <>
-      <BackButton />
+      <BackButton path="/book" />
       <SearchPage />
     </>
   );

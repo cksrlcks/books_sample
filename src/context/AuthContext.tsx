@@ -5,8 +5,10 @@ import {
   signInWithPassword,
   signOut,
   signUp,
+  passwordChange,
+  findPassword,
 } from "@/services/auth";
-import { User } from "@supabase/supabase-js";
+import { User, UserResponse } from "@supabase/supabase-js";
 import {
   AuthError,
   AuthResponse,
@@ -39,6 +41,17 @@ export type AuthContextType = {
     password: string;
     username: string;
   }) => Promise<AuthResponse>;
+  passwordChange: ({
+    new_password,
+  }: {
+    new_password: string;
+  }) => Promise<UserResponse>;
+
+  findPassword: ({
+    email,
+  }: {
+    email: string;
+  }) => Promise<{ data: {}; error: null } | { data: null; error: AuthError }>;
 };
 
 //타입을 넣어줘도 쓰는곳에서 못읽음???
@@ -48,6 +61,8 @@ export const AuthContext = createContext<AuthContextType>({
   signInWithGoogle,
   signInWithPassword,
   signUp,
+  passwordChange,
+  findPassword,
 });
 
 export const AuthContextProvider = ({
@@ -86,6 +101,8 @@ export const AuthContextProvider = ({
     signInWithGoogle,
     signInWithPassword,
     signUp,
+    passwordChange,
+    findPassword,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

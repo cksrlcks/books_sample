@@ -32,7 +32,7 @@ export default function BookDetail({ book }: { book: BookData | null }) {
   if (!book) return <div>책정보가 없습니다.</div>;
   return (
     <>
-      <BackButton />
+      <BackButton path="/book" />
       <>
         <div className={styles.frameWrapper}>
           <figure className={styles.frame}>

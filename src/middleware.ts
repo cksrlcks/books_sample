@@ -12,16 +12,6 @@ export async function middleware(request: NextRequest) {
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
-      auth: {
-        persistSession: false,
-        /* 
-        임시로 세션유지 끄기
-          upabase/ssr의 issue로 등록되어있음
-          (현재 default true로 해두면 세션만료, 로그아웃시 리프레시토큰이 없다는 오류가 뜨고있음)
-
-          공식문서에서 token을 refresh하는 로직은 supabase.auth.getUser()에 있다고 함 (여기서 제대로 리프레시를 안하는것같음)
-        */
-      },
       cookies: {
         get(name: string) {
           return request.cookies.get(name)?.value;
@@ -64,9 +54,13 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  await supabase.auth.getUser();
-
-  return response;
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+  if (!user) {
+    return NextResponse.redirect(new URL("/mypage/signin", request.url));
+  }
 }
 
 export const config = {
@@ -78,6 +72,8 @@ export const config = {
      * - favicon.ico (favicon file)
      * Feel free to modify this pattern to include more paths.
      */
-    "/((?!_next/static|_next/image|favicon.ico).*)",
+    "/mypage/me",
+    "/mypage/activity",
+    "/mypage/password",
   ],
 };

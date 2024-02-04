@@ -6,7 +6,7 @@ import PageTitle from "@/components/PageTitle";
 export default function MyPage() {
   return (
     <>
-      <BackButton />
+      <BackButton path="/mypage" />
       <Inner>
         <PageTitle name="내정보" heading={3} />
         <UserInfo />
