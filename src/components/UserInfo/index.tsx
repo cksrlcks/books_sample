@@ -22,7 +22,7 @@ export default function UserInfo() {
       ) &&
       user
     ) {
-      await fetch("/api/auth/withdrawal", {
+      await fetch("/auth/withdrawal", {
         method: "POST",
         body: JSON.stringify({
           user_id: user.id,

@@ -12,7 +12,6 @@ import styles from "./style.module.css";
 import { getUserName } from "@/app/util/getUserName";
 import { User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
-import { mutate } from "swr";
 
 const schema = yup.object().shape({
   comment: yup
@@ -47,7 +46,7 @@ export default function CommentForm({
     if (!user) {
       alert("로그인이 필요합니다.");
     }
-
+    console.log("e");
     try {
       await fetch(`/api/comment`, {
         method: "POST",
@@ -77,7 +76,7 @@ export default function CommentForm({
           error={errors.comment}
         />
         <div className={styles.actionBar}>
-          <Button bg="white" onClick={handleClose}>
+          <Button type="button" bg="white" onClick={handleClose}>
             닫기
           </Button>
           {isSubmitting ? (
