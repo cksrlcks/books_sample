@@ -1,5 +1,5 @@
 import BookDetail from "@/components/BookDetail";
-import { getBook } from "@/services/post";
+import { getBook } from "@/services/postServer";
 import React from "react";
 
 export default async function page({ params }: { params: { id: string } }) {

@@ -22,7 +22,7 @@ export default function UserInfo() {
       ) &&
       user
     ) {
-      await fetch("/api/auth/withdrawal", {
+      await fetch("/auth/withdrawal", {
         method: "POST",
         body: JSON.stringify({
           user_id: user.id,
@@ -45,11 +45,9 @@ export default function UserInfo() {
         </div>
       )}
       <div className={styles.action}>
-        {user?.app_metadata.provider === "email" && (
-          <Link href="/mypage/password" className={styles.button}>
-            비밀번호변경
-          </Link>
-        )}
+        <Link href="/mypage/password" className={styles.button}>
+          비밀번호변경
+        </Link>
         <button className={styles.button} onClick={handleWithdrawal}>
           회원탈퇴
         </button>

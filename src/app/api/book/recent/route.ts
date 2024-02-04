@@ -3,7 +3,7 @@ import {
   getMostCommentedBooks,
   getMostLikedBooks,
   getRecentBooks,
-} from "@/services/post";
+} from "@/services/postServer";
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const filter = searchParams.get("filter");

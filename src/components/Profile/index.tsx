@@ -26,7 +26,7 @@ export default function Profile() {
           <Avatar avatar={avatar} username={username} />
           <div className={styles.name}>{username}님 안녕하세요.</div>
           <div className={styles.email}>{user.email}</div>
-          <ActivityBar userId={user.id} />
+          <ActivityBar />
           <Button onClick={handleLogout}>로그아웃</Button>
         </>
       ) : (

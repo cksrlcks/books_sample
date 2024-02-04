@@ -33,6 +33,8 @@ export const translateErrorMessage = (originMessage: string) => {
       break;
     case "Invalid login credentials":
       translated = "로그인을 실패했습니다. 아이디와 비밀번호를 확인해주세요.";
+    case "Unable to validate email address: invalid format":
+      translated = "이메일을 확인해주세요";
       break;
   }
 

@@ -18,6 +18,7 @@ export default function Button({
 }: ButtonProps) {
   return (
     <button
+      type={type}
       className={`${styles.button} ${bg ? styles[bg] : ""}`}
       onClick={onClick}
       disabled={disabled}

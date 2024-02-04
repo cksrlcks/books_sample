@@ -12,12 +12,12 @@ import styles from "./style.module.css";
 import { getUserName } from "@/app/util/getUserName";
 import { User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
-import { mutate } from "swr";
 
 const schema = yup.object().shape({
   comment: yup
     .string()
     .min(2, "최소 2자이상으로 써주세요")
+    .max(100, "100자 이내로 작성해주세요")
     .required("내용을 작성해주세요"),
 });
 type FormData = yup.InferType<typeof schema>;
@@ -47,7 +47,6 @@ export default function CommentForm({
     if (!user) {
       alert("로그인이 필요합니다.");
     }
-
     try {
       await fetch(`/api/comment`, {
         method: "POST",
@@ -77,7 +76,7 @@ export default function CommentForm({
           error={errors.comment}
         />
         <div className={styles.actionBar}>
-          <Button bg="white" onClick={handleClose}>
+          <Button type="button" bg="white" onClick={handleClose}>
             닫기
           </Button>
           {isSubmitting ? (

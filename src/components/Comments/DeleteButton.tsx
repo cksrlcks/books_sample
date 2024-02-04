@@ -3,10 +3,18 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import styles from "./style.module.css";
 
-export default function DeleteButton({ comment_id }: { comment_id: number }) {
+export default function DeleteButton({
+  comment_id,
+  callback,
+}: {
+  comment_id: number;
+  callback?: () => void;
+}) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const handleDelete = async () => {
+  const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
     const willDelete = confirm("정말 삭제하시겠습니까?");
     if (!willDelete) return;
     try {
@@ -18,6 +26,9 @@ export default function DeleteButton({ comment_id }: { comment_id: number }) {
       });
     } catch (error) {
       console.log(error);
+    }
+    if (callback) {
+      callback();
     }
     router.refresh();
   };

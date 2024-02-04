@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
-import { deleteComment, getComment, setComment } from "@/services/post";
+import { deleteComment, getComment, setComment } from "@/services/postServer";
 
 export async function POST(request: Request) {
   const { id, user_id, username, email, comment } = await request.json();
