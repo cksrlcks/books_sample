@@ -17,6 +17,7 @@ const schema = yup.object().shape({
   comment: yup
     .string()
     .min(2, "최소 2자이상으로 써주세요")
+    .max(100, "100자 이내로 작성해주세요")
     .required("내용을 작성해주세요"),
 });
 type FormData = yup.InferType<typeof schema>;
@@ -46,7 +47,6 @@ export default function CommentForm({
     if (!user) {
       alert("로그인이 필요합니다.");
     }
-    console.log("e");
     try {
       await fetch(`/api/comment`, {
         method: "POST",

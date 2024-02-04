@@ -4,8 +4,8 @@ import Link from "next/link";
 import { FcLike } from "react-icons/fc";
 import { FcComments } from "react-icons/fc";
 
-export default function ActivityBar({ userId }: { userId: string }) {
-  const { data, isLoading } = useSWR(`/api/activity?user_id=${userId}`);
+export default function ActivityBar() {
+  const { data, isLoading } = useSWR(`/api/me`);
   return (
     <div className={styles.bar}>
       <Link href="/mypage/activity?type=like">

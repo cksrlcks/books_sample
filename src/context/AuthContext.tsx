@@ -7,7 +7,7 @@ import {
   signUp,
   passwordChange,
   findPassword,
-} from "@/services/auth";
+} from "@/services/authClient";
 import { User, UserResponse } from "@supabase/supabase-js";
 import {
   AuthError,

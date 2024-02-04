@@ -24,7 +24,7 @@ export default function Comments({
             </div>
             <div className={styles.control}>
               {user?.id === comment.user_id && (
-                <DeleteButton book_id={book.id} comment_id={comment.id} />
+                <DeleteButton comment_id={comment.id} />
               )}
             </div>
           </div>

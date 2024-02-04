@@ -13,7 +13,7 @@ import * as yup from "yup";
 import { useEffect, useState } from "react";
 import PageTitle from "../PageTitle";
 import { createClient } from "@/lib/supabase/client";
-import { passwordChange } from "@/services/auth";
+import { passwordChange } from "@/services/authClient";
 
 const schema = yup.object().shape({
   password: yup
@@ -74,6 +74,7 @@ export default function ResetPassword() {
   const onSubmit: SubmitHandler<FormData> = async ({ password }) => {
     const { data, error } = await passwordChange({ new_password: password });
     if (error) {
+      console.log(error.message);
       alert("비밀번호 변경에 실패했습니다.");
       return;
     }

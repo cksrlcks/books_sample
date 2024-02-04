@@ -1,0 +1,49 @@
+.bookList {
+  display: flex;
+  gap: 40px 20px;
+  flex-wrap: wrap;
+}
+
+.bookList .item {
+  width: calc(50% - 10px);
+}
+
+.bookTempCover {
+  width: 100%;
+  height: 100%;
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bookThumbFrame {
+  width: 100%;
+  aspect-ratio: 2/3;
+  position: relative;
+  margin-bottom: 6px;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.bookName {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+  letter-spacing: -0.04em;
+}
+
+.writter {
+  font-size: 13px;
+  color: #888;
+  letter-spacing: -0.05em;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+
+.bookDate {
+  font-size: 12px;
+  letter-spacing: -0.04em;
+
+  color: #888;
+}

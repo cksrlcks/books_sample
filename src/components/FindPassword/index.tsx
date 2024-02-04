@@ -67,7 +67,6 @@ export default function Signin() {
             <Button type="submit">비밀번호 재설정 메일보내기</Button>
           )}
         </form>
-        <button></button>
       </Inner>
     </>
   );

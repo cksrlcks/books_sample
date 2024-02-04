@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { setLike, deleteLike, getLike } from "@/services/post";
+import { setLike, deleteLike, getLike } from "@/services/postServer";
 
 export async function POST(req: Request) {
   const { book_id, user_id } = await req.json();

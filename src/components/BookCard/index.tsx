@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./style.module.css";
-import { RecentBook } from "@/types/book";
+import { Book, RecentBook } from "@/types/book";
 import Image from "next/image";
 import Link from "next/link";
 import { format, register } from "timeago.js";
@@ -12,9 +12,11 @@ register("ko", ko);
 export default function Book({
   item,
   desc = "hide",
+  type = "full",
 }: {
   item: RecentBook;
   desc?: "show" | "hide";
+  type?: "simple" | "full";
 }) {
   return (
     <Link href={`/book/${item.id}`}>
@@ -28,10 +30,11 @@ export default function Book({
         </figure>
         <div className={styles.action}>
           <div className={`${styles.bookIcon} ${styles.like}`}>
-            <FcLike /> <span className={styles.count}>{item.likes.length}</span>
+            <FcLike />
+            <span className={styles.count}>{item.likes.length}</span>
           </div>
           <div className={`${styles.bookIcon} ${styles.comment}`}>
-            <FcComments />{" "}
+            <FcComments />
             <span className={styles.count}>{item.comments.length}</span>
           </div>
         </div>
