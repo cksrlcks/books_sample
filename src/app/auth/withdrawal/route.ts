@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       return supabase.from("comments").delete().eq("user_id", user_id);
     };
     try {
-      const res = await Promise.all([deleteLikes(), deleteComments()]);
+      await Promise.all([deleteLikes(), deleteComments()]);
       return new Response("success", { status: 200 });
     } catch (error) {
       return new Response("fail", { status: 400 });
