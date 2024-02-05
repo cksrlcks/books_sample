@@ -2,6 +2,7 @@ import styles from "./style.module.css";
 import { BookData } from "@/types/book";
 import { User } from "@/types/user";
 import DeleteButton from "./DeleteButton";
+import Timeago from "../Timeago";
 export default function Comments({
   user,
   book,
@@ -29,6 +30,9 @@ export default function Comments({
             </div>
           </div>
           <div className={styles.content}>{comment.comment}</div>
+          <span className={styles.date}>
+            <Timeago date={comment.created_at} />
+          </span>
         </div>
       ))}
     </div>

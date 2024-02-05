@@ -3,3 +3,31 @@
   flex-direction: column;
   gap: 10px;
 }
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid #ddd;
+  background: #fff;
+  margin-bottom: 10px;
+}
+.item .bookname {
+  font-weight: 700;
+  font-size: 13px;
+}
+.item .comment {
+  font-size: 15px;
+  letter-spacing: -0.05em;
+}
+.item .control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item .date {
+  font-size: 14px;
+  color: #888;
+}

@@ -1,0 +1,47 @@
+.tab {
+  background: #eee;
+  padding: 6px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.tabInner {
+  display: flex;
+  position: relative;
+}
+.tabInner:after {
+  content: "";
+  width: 50%;
+  height: 100%;
+  background: #fff;
+  border-radius: 4px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.tabInner:has(.tabBtn.active:nth-child(2)):after {
+  transform: translateX(100%);
+}
+
+.tabInner .tabBtn {
+  width: 100%;
+  background: transparent;
+  padding: 0.4em 1em;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 13px;
+  color: #888;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+}
+.tabInner .tabBtn.active {
+  color: #000;
+}
