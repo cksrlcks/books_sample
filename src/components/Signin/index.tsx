@@ -1,20 +1,19 @@
 "use client";
 
-import BackButton from "@/components/BackButton";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Inner from "@/components/Inner";
 import { useUser } from "@/context/AuthContext";
 import { FcGoogle } from "react-icons/fc";
-import styles from "./style.module.css";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
+import PageTitle from "../PageTitle";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { translateErrorMessage } from "@/lib/supabase/errorMessage";
-import { useState } from "react";
-import PageTitle from "../PageTitle";
-import Link from "next/link";
+import { translateErrorMessage } from "@/app/util/errorMessage";
+import styles from "./style.module.css";
 
 const schema = yup.object().shape({
   email: yup
@@ -55,7 +54,6 @@ export default function Signin() {
   const handleGoogleSignin = async () => await signInWithGoogle();
   return (
     <>
-      <BackButton path="/mypage" />
       <Inner>
         <PageTitle name="로그인" heading={3} />
         <button onClick={handleGoogleSignin} className={styles.google}>

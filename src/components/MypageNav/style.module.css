@@ -1,0 +1,10 @@
+.myNav {
+  list-style: none;
+}
+.myNav li {
+  margin-bottom: 10px;
+}
+.link {
+  font-weight: 700;
+  font-size: 18px;
+}

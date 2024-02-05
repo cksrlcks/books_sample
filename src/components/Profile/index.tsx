@@ -20,7 +20,7 @@ export default function Profile() {
   const avatar = user && user.user_metadata?.avatar_url;
   const username = user && getUserName(user);
   return (
-    <>
+    <div className={styles.me}>
       {user ? (
         <>
           <Avatar avatar={avatar} username={username} />
@@ -32,6 +32,6 @@ export default function Profile() {
       ) : (
         <BeforeLogin />
       )}
-    </>
+    </div>
   );
 }
