@@ -61,6 +61,7 @@ export async function middleware(request: NextRequest) {
   if (!user) {
     return NextResponse.redirect(new URL("/mypage/signin", request.url));
   }
+  return response;
 }
 
 export const config = {
