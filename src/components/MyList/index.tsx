@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import useSWR from "swr";
 import MyLikesList from "../MyLikesList";
 import MyCommenstList from "../MyCommentsList";
+import styles from "./style.module.css";
 
 export default function MyList() {
   const [tab, setTab] = useState<"like" | "comment">("like");
@@ -11,13 +12,31 @@ export default function MyList() {
   const { data } = useSWR(user ? `/api/me` : null);
   return (
     <div>
-      <div>
-        <button onClick={() => setTab("like")}>
-          좋아요 {data ? data.likes.data.length : "-"}
-        </button>
-        <button onClick={() => setTab("comment")}>
-          코멘트 {data ? data.comments.data.length : "-"}
-        </button>
+      <div className={styles.tab}>
+        <div className={styles.tabInner}>
+          <button
+            className={`${styles.tabBtn} ${
+              tab === "like" ? styles.active : ""
+            }`}
+            onClick={() => setTab("like")}
+          >
+            <span className={styles.name}>좋아요</span>
+            <span className={styles.count}>
+              {data ? data.likes.data.length : "-"}
+            </span>
+          </button>
+          <button
+            className={`${styles.tabBtn} ${
+              tab === "comment" ? styles.active : ""
+            }`}
+            onClick={() => setTab("comment")}
+          >
+            <span className={styles.name}>코멘트</span>
+            <span className={styles.count}>
+              {data ? data.comments.data.length : "-"}
+            </span>
+          </button>
+        </div>
       </div>
       {tab === "like" ? <MyLikesList /> : <MyCommenstList />}
     </div>

@@ -2,10 +2,8 @@ import React from "react";
 import styles from "./style.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import { format, register } from "timeago.js";
-import { ko } from "timeago.js/lib/lang";
 import { Like } from "@/types/me";
-register("ko", ko);
+import Timeago from "../Timeago";
 
 export default function BookCard({ like }: { like: Like }) {
   const { books: item, created_at } = like;
@@ -26,7 +24,7 @@ export default function BookCard({ like }: { like: Like }) {
         </div>
 
         <div className={styles.bookDate}>
-          좋아요 등록 : {format(created_at, "ko")}
+          좋아요 등록 : <Timeago date={created_at} />
         </div>
       </article>
     </Link>

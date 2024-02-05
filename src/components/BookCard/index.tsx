@@ -3,11 +3,9 @@ import styles from "./style.module.css";
 import { Book, RecentBook } from "@/types/book";
 import Image from "next/image";
 import Link from "next/link";
-import { format, register } from "timeago.js";
-import { ko } from "timeago.js/lib/lang";
 import { FcLike } from "react-icons/fc";
 import { FcComments } from "react-icons/fc";
-register("ko", ko);
+import Timeago from "../Timeago";
 
 export default function Book({
   item,
@@ -45,7 +43,9 @@ export default function Book({
         {desc === "show" && (
           <div className={styles.bookText}>{item.description}</div>
         )}
-        <div className={styles.bookDate}>{format(item.created_at, "ko")}</div>
+        <div className={styles.bookDate}>
+          <Timeago date={item.created_at} />
+        </div>
       </article>
     </Link>
   );

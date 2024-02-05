@@ -1,18 +1,15 @@
 "use client";
 import React, { useState } from "react";
 import styles from "./style.module.css";
-import { format, register } from "timeago.js";
-import { ko } from "timeago.js/lib/lang";
 import BackButton from "../BackButton";
 import Inner from "../Inner";
 import LikeBar from "./Like";
 import "react-loading-skeleton/dist/skeleton.css";
 import { BookData } from "@/types/book";
 import Comments from "../Comments";
-import Link from "next/link";
 import CommentForm from "@/components/CommentForm";
 import { useUser } from "@/context/AuthContext";
-register("ko", ko);
+import Timeago from "../Timeago";
 
 export default function BookDetail({ book }: { book: BookData | null }) {
   const [openComment, setOpenComment] = useState(false);
@@ -66,7 +63,7 @@ export default function BookDetail({ book }: { book: BookData | null }) {
         )}
         <Inner>
           <div className={styles.bookDate}>
-            등록일 : {format(book.created_at, "ko")}
+            등록일 : <Timeago date={book.created_at} />
           </div>
           <div>상세정보</div>
           <br />

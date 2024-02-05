@@ -1,7 +1,7 @@
 "use client";
 
 import { Book } from "@/types/book";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Inner from "../Inner";
 import * as yup from "yup";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -38,6 +38,15 @@ export default function CommentForm({
     reset,
     formState: { errors, isSubmitting },
   } = useForm({ resolver: yupResolver(schema) });
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.scrollIntoView();
+      inputRef.current.focus();
+    }
+  }, []);
+
   const handleClose = () => {
     reset();
     onClose();
@@ -61,7 +70,7 @@ export default function CommentForm({
 
       handleClose();
     } catch (error) {
-      //console.log(error);
+      console.log(error);
     }
 
     router.refresh();
@@ -74,6 +83,7 @@ export default function CommentForm({
           label="한줄평작성하기"
           register={register("comment")}
           error={errors.comment}
+          ref={inputRef}
         />
         <div className={styles.actionBar}>
           <Button type="button" bg="white" onClick={handleClose}>

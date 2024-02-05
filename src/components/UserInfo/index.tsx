@@ -5,15 +5,15 @@ import Avatar from "../Avatar";
 import styles from "./style.module.css";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function UserInfo() {
   const router = useRouter();
-  const { user, signOut } = useUser();
+  const [isLoading, setIsLoading] = useState(false);
+  const { user, signOut, withdrawal } = useUser();
   const avatar = user && user.user_metadata?.avatar_url;
   const username = user && getUserName(user);
   const date = user && new Date(user.created_at);
-
-  const handlePasswordChange = async () => {};
 
   const handleWithdrawal = async () => {
     if (
@@ -22,14 +22,9 @@ export default function UserInfo() {
       ) &&
       user
     ) {
-      await fetch("/auth/withdrawal", {
-        method: "POST",
-        body: JSON.stringify({
-          user_id: user.id,
-        }),
-      });
-      signOut();
-      router.push("/");
+      setIsLoading(true);
+      await withdrawal(user.id);
+      router.replace("/");
     }
   };
   return (
@@ -44,14 +39,18 @@ export default function UserInfo() {
           </span>
         </div>
       )}
-      <div className={styles.action}>
-        <Link href="/mypage/password" className={styles.button}>
-          비밀번호변경
-        </Link>
-        <button className={styles.button} onClick={handleWithdrawal}>
-          회원탈퇴
-        </button>
-      </div>
+      {isLoading ? (
+        <>회원탈퇴중...</>
+      ) : (
+        <div className={styles.action}>
+          <Link href="/mypage/password" className={styles.button}>
+            비밀번호변경
+          </Link>
+          <button className={styles.button} onClick={handleWithdrawal}>
+            회원탈퇴
+          </button>
+        </div>
+      )}
     </>
   );
 }
