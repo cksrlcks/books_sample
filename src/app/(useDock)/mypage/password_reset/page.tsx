@@ -1,5 +1,11 @@
+import BackButton from "@/components/BackButton";
 import ResetPassword from "@/components/ResetPassword";
 
 export default function ResetPage() {
-  return <ResetPassword />;
+  return (
+    <>
+      <BackButton path="/mypage" />
+      <ResetPassword />
+    </>
+  );
 }

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styles from "./style.module.css";
 import BackButton from "../BackButton";
 import Inner from "../Inner";
-import LikeBar from "./Like";
+import LikeButton from "./LikeButton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { BookData } from "@/types/book";
 import Comments from "../Comments";
@@ -48,7 +48,7 @@ export default function BookDetail({ book }: { book: BookData | null }) {
         </Inner>
         <Inner>
           <div className={styles.actionBar}>
-            <LikeBar user={user} book={book} />
+            <LikeButton user={user} book={book} />
             <button
               type="button"
               className={styles.commentBtn}

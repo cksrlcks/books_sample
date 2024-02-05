@@ -1,5 +1,11 @@
+import BackButton from "@/components/BackButton";
 import Signin from "@/components/Signin";
 
 export default function signInPage() {
-  return <Signin />;
+  return (
+    <>
+      <BackButton path="/mypage" />
+      <Signin />
+    </>
+  );
 }

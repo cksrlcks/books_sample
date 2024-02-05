@@ -1,18 +1,17 @@
 "use client";
 
-import BackButton from "@/components/BackButton";
-import Inner from "@/components/Inner";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useUser } from "@/context/AuthContext";
-import styles from "./style.module.css";
+import Inner from "@/components/Inner";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
+import PageTitle from "../PageTitle";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { translateErrorMessage } from "@/lib/supabase/errorMessage";
-import { useState } from "react";
-import PageTitle from "../PageTitle";
-import { useRouter } from "next/navigation";
+import { translateErrorMessage } from "@/app/util/errorMessage";
+import styles from "./style.module.css";
 
 const schema = yup.object().shape({
   email: yup
@@ -50,7 +49,6 @@ export default function Signin() {
 
   return (
     <>
-      <BackButton path="/mypage" />
       <Inner>
         <PageTitle name="비밀번호 찾기" heading={3} />
         {error && <div className={styles.formError}>{error}</div>}

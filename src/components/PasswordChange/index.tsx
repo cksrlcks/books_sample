@@ -1,8 +1,7 @@
 "use client";
-import BackButton from "@/components/BackButton";
 import { useRouter } from "next/navigation";
 import Inner from "@/components/Inner";
-import { translateErrorMessage } from "@/lib/supabase/errorMessage";
+import { translateErrorMessage } from "@/app/util/errorMessage";
 import { useUser } from "@/context/AuthContext";
 import styles from "./style.module.css";
 import Input from "@/components/Input";
@@ -53,7 +52,6 @@ export default function PasswordChange() {
 
   return (
     <>
-      <BackButton path="/mypage" />
       <Inner>
         <PageTitle name="비밀번호 재설정" heading={3} />
         {error && <div className={styles.formError}>{error}</div>}

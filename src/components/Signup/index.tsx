@@ -1,17 +1,16 @@
 "use client";
-import BackButton from "@/components/BackButton";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Inner from "@/components/Inner";
-import { translateErrorMessage } from "@/lib/supabase/errorMessage";
+import { translateErrorMessage } from "@/app/util/errorMessage";
 import { useUser } from "@/context/AuthContext";
-import styles from "./style.module.css";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
+import PageTitle from "../PageTitle";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useState } from "react";
-import PageTitle from "../PageTitle";
+import styles from "./style.module.css";
 
 const schema = yup.object().shape({
   email: yup
@@ -67,7 +66,6 @@ export default function Singup() {
 
   return (
     <>
-      <BackButton path="/mypage" />
       <Inner>
         <PageTitle name="회원가입" heading={3} />
         {error && <div className={styles.formError}>{error}</div>}

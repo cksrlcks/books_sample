@@ -1,5 +1,11 @@
+import BackButton from "@/components/BackButton";
 import PasswordChange from "@/components/PasswordChange";
 
 export default function signInPage() {
-  return <PasswordChange />;
+  return (
+    <>
+      <BackButton path="/mypage" />
+      <PasswordChange />
+    </>
+  );
 }
