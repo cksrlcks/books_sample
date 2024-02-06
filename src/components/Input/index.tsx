@@ -1,4 +1,3 @@
-import { ChangeEvent, LegacyRef, forwardRef } from "react";
 import styles from "./style.module.css";
 import { FieldError, UseFormRegisterReturn } from "react-hook-form";
 
