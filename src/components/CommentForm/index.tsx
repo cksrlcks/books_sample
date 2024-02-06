@@ -81,7 +81,6 @@ export default function CommentForm({
           label="한줄평작성하기"
           register={register("comment")}
           error={errors.comment}
-          ref={inputRef}
         />
         <div className={styles.actionBar}>
           <Button type="button" bg="white" onClick={handleClose}>
