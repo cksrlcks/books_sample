@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getNotices } from "./[id]/route";
+import { getNotices } from "@/services/noticeServer";
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
 
