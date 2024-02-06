@@ -10,7 +10,7 @@ export default function Nav({ menu }: { menu: Menu[] }) {
   return (
     <ul className={styles.myNav}>
       {menu.map((item) => (
-        <li>
+        <li key={item.name}>
           <Link href={item.url} className={styles.link}>
             {item.name}
           </Link>
