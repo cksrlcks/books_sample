@@ -9,19 +9,18 @@ type Props = {
   type?: string;
 };
 
-export default forwardRef(function Input(
+export default function Input(
   { label, register, error, type = "text" }: Props,
-  ref: LegacyRef<HTMLInputElement>
 ) {
   return (
     <div className={styles.inputWrapper}>
       <label htmlFor={label} className={styles.label}>
         {label}
       </label>
-      <div className={styles.input}>
-        <input {...register} type={type} ref={ref} />
+      <div className={styles.input} >
+        <input {...register} type={type} />
       </div>
       {error?.message}
     </div>
   );
-});
+}

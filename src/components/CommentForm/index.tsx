@@ -36,16 +36,14 @@ export default function CommentForm({
     register,
     handleSubmit,
     reset,
+    setFocus,
     formState: { errors, isSubmitting },
   } = useForm({ resolver: yupResolver(schema) });
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.scrollIntoView();
-      inputRef.current.focus();
-    }
-  }, []);
+    setFocus("comment")
+  }, [setFocus]);
 
   const handleClose = () => {
     reset();
