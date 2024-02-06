@@ -21,7 +21,7 @@ export default function Book({
       <article className={styles.bookItem}>
         <figure className={styles.bookThumbFrame}>
           {item["cover_img_url"] ? (
-            <Image src={item["cover_img_url"]} alt={item.name} fill />
+            <Image src={item["cover_img_url"]} alt={item.name} fill sizes="100%" priority={true} />
           ) : (
             <div className={styles.bookTempCover}>book</div>
           )}
