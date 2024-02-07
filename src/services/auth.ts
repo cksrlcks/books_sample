@@ -1,15 +1,7 @@
-import { createClient as server } from "@/lib/supabase/server";
-import { createClient as client } from "@/lib/supabase/client";
-import { cookies } from "next/headers";
+import { createClient } from "@/lib/supabase/client";
 
-//server용
-export const getUser = () => {
-  const supabase = server(cookies());
-  return supabase.auth.getUser();
-};
+const supabase = createClient();
 
-//client용
-const supabase = client();
 export const signInWithPassword = ({
   email,
   password,

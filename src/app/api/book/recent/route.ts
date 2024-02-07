@@ -1,26 +1,42 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-  getMostCommentedBooks,
-  getMostLikedBooks,
-  getRecentBooks,
-} from "@/services/post";
+import { createClient } from "@/lib/supabase/actions";
+import { cookies } from "next/headers";
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const filter = searchParams.get("filter");
+  const supabase = createClient(cookies());
 
   if (filter === "recent") {
-    const { data, error } = await getRecentBooks();
+    const { data, error } = await supabase
+      .from("books")
+      .select(
+        `
+        *,
+        likes(*),
+        comments(*)
+      `
+      )
+      .order("created_at", { ascending: false })
+      .limit(5);
     if (error) {
-      return new Response("fail", { status: 400 });
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     return NextResponse.json(data);
   }
 
   if (filter === "likes") {
-    const { data, error } = await getMostLikedBooks();
+    const { data, error } = await supabase.from("books").select(
+      `
+        *,
+        likes(*),
+        comments(*)
+        `
+    );
+
     if (error) {
-      return new Response("fail", { status: 400 });
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     const sortedData = data
@@ -30,9 +46,16 @@ export async function GET(request: NextRequest) {
   }
 
   if (filter === "comments") {
-    const { data, error } = await getMostCommentedBooks();
+    const { data, error } = await supabase.from("books").select(
+      `
+        *,
+        likes(*),
+        comments(*)
+        `
+    );
+
     if (error) {
-      return new Response("fail", { status: 400 });
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     const sortedData = data

@@ -8,7 +8,6 @@ import Skeleton from "../BookCard/Skeleton";
 import { useInView } from "react-intersection-observer";
 
 export default function BookList() {
-  const [isLoadMore, setIsLoadMore] = useState(false);
   const limit = 4;
   const getKey = (pageIndex: number, prevData: RecentBook[]) => {
     if (prevData && !prevData.length) return null;
