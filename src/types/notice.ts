@@ -1,8 +1,3 @@
-export type Notice = {
-  id: string;
-  title: string;
-  regDate: string;
-  content: string;
-};
+import { Tables } from "./supabase";
 
-export type RecentNotice = Omit<Notice, "content">;
+export type Notice = Tables<"notice">;
