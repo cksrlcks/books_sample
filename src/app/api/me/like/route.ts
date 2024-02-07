@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getUserLikes } from "@/services/activityServer";
-import { getUser } from "@/services/authServer";
+import { getUserLikes } from "@/services/activity";
+import { getUser } from "@/services/auth";
 export async function GET(request: NextRequest) {
   //세션없으면 돌려보내기
   const {
