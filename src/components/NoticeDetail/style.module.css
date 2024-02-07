@@ -1,0 +1,21 @@
+.header {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 0.4em;
+}
+
+.date {
+  color: #888;
+  font-size: 14px;
+}
+
+.content {
+  word-break: keep-all;
+  word-break: break-all;
+}

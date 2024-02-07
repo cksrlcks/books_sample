@@ -10,7 +10,7 @@ import { useState } from "react";
 export default function UserInfo() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const { user, signOut, withdrawal } = useUser();
+  const { user, signOut } = useUser();
   const avatar = user && user.user_metadata?.avatar_url;
   const username = user && getUserName(user);
   const date = user && new Date(user.created_at);
@@ -23,8 +23,22 @@ export default function UserInfo() {
       user
     ) {
       setIsLoading(true);
-      await withdrawal(user.id);
-      router.replace("/");
+
+      signOut();
+
+      const res = await fetch("/auth/withdrawal", {
+        method: "POST",
+        body: JSON.stringify({
+          user_id: user.id,
+        }),
+      });
+
+      if (res.ok) {
+        router.refresh();
+        router.replace("/");
+      } else {
+        alert("탈퇴에 문제가 생겼습니다.");
+      }
     }
   };
   return (

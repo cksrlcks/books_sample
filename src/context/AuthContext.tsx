@@ -7,8 +7,7 @@ import {
   signUp,
   passwordChange,
   findPassword,
-  withdrawal,
-} from "@/services/authClient";
+} from "@/services/auth";
 import { User, UserResponse } from "@supabase/supabase-js";
 import {
   AuthError,
@@ -53,8 +52,6 @@ export type AuthContextType = {
   }: {
     email: string;
   }) => Promise<{ data: {}; error: null } | { data: null; error: AuthError }>;
-
-  withdrawal: (user_id: string) => Promise<Response>;
 };
 
 //타입을 넣어줘도 쓰는곳에서 못읽음???
@@ -66,7 +63,6 @@ export const AuthContext = createContext<AuthContextType>({
   signUp,
   passwordChange,
   findPassword,
-  withdrawal,
 });
 
 export const AuthContextProvider = ({
@@ -107,7 +103,6 @@ export const AuthContextProvider = ({
     signUp,
     passwordChange,
     findPassword,
-    withdrawal,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

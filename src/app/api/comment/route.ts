@@ -1,31 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/actions";
 import { cookies } from "next/headers";
-import { deleteComment, getComment, setComment } from "@/services/postServer";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const { id, user_id, username, email, comment } = await request.json();
-  const { data, error } = await setComment({
-    book_id: Number(id),
-    user_id,
-    username,
-    email,
-    comment,
-  });
+  const supabase = createClient(cookies());
+
+  const { data, error } = await supabase
+    .from("comments")
+    .insert({ book_id: Number(id), user_id, username, email, comment });
 
   if (error) {
-    return new Response("fail", { status: 400 });
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
   return NextResponse.json(data);
 }
 
-export async function DELETE(req: Request) {
+export async function DELETE(req: NextRequest) {
   const { comment_id } = await req.json();
-  const { data, error } = await deleteComment(comment_id);
+  const supabase = createClient(cookies());
+  const { data, error } = await supabase
+    .from("comments")
+    .delete()
+    .eq("id", comment_id);
 
   if (error) {
-    return new Response("fail", { status: 400 });
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
   return NextResponse.json(data);

@@ -9,7 +9,9 @@ import styles from "./style.module.css";
 export default function MyList() {
   const [tab, setTab] = useState<"like" | "comment">("like");
   const { user } = useUser();
-  const { data } = useSWR(user ? `/api/me` : null);
+  const { data: likes, isLoading: likesLoading } = useSWR(`/api/me/like`);
+  const { data: comments, isLoading: commentsLoading } =
+    useSWR(`/api/me/comment`);
   return (
     <div>
       <div className={styles.tab}>
@@ -21,9 +23,7 @@ export default function MyList() {
             onClick={() => setTab("like")}
           >
             <span className={styles.name}>좋아요</span>
-            <span className={styles.count}>
-              {data ? data.likes.data.length : "-"}
-            </span>
+            <span className={styles.count}>{likes ? likes.length : "-"}</span>
           </button>
           <button
             className={`${styles.tabBtn} ${
@@ -33,7 +33,7 @@ export default function MyList() {
           >
             <span className={styles.name}>코멘트</span>
             <span className={styles.count}>
-              {data ? data.comments.data.length : "-"}
+              {comments ? comments.length : "-"}
             </span>
           </button>
         </div>

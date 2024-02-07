@@ -1,8 +1,16 @@
+"use client";
+import useSWR from "swr";
 import BookDetail from "@/components/BookDetail";
-import { getBook } from "@/services/postServer";
-import React from "react";
+import Skeleton from "@/components/BookDetail/skeleton";
+import BackButton from "@/components/BackButton";
 
-export default async function page({ params }: { params: { id: string } }) {
-  const { data, error } = await getBook(params.id);
-  return <BookDetail book={data} />;
+export default function page({ params }: { params: { id: string } }) {
+  const { data, isLoading } = useSWR(`/api/book/${params.id}`);
+
+  return (
+    <>
+      <BackButton path="/book" />
+      {isLoading ? <Skeleton /> : <BookDetail book={data} />}
+    </>
+  );
 }

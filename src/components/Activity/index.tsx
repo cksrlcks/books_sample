@@ -5,14 +5,16 @@ import { FcLike } from "react-icons/fc";
 import { FcComments } from "react-icons/fc";
 
 export default function ActivityBar() {
-  const { data, isLoading } = useSWR(`/api/me`);
+  const { data: likes, isLoading: likesLoading } = useSWR(`/api/me/like`);
+  const { data: comments, isLoading: commentsLoading } =
+    useSWR(`/api/me/comment`);
   return (
     <div className={styles.bar}>
       <Link href="/mypage/activity?type=like">
-        <FcLike /> {isLoading ? "-" : data.likes.data.length}
+        <FcLike /> {likesLoading ? "-" : likes.length}
       </Link>
       <Link href="/mypage/activity?type=comment">
-        <FcComments /> {isLoading ? "-" : data.comments.data.length}
+        <FcComments /> {commentsLoading ? "-" : comments.length}
       </Link>
     </div>
   );

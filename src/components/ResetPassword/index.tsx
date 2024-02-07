@@ -10,7 +10,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { createClient } from "@/lib/supabase/client";
-import { passwordChange } from "@/services/authClient";
+import { useUser } from "@/context/AuthContext";
+import { translateErrorMessage } from "@/app/util/errorMessage";
 
 const schema = yup.object().shape({
   password: yup
@@ -31,6 +32,8 @@ export default function ResetPassword() {
   const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
   const [password, setPassword] = useState("");
+
+  const { passwordChange } = useUser();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -71,8 +74,7 @@ export default function ResetPassword() {
   const onSubmit: SubmitHandler<FormData> = async ({ password }) => {
     const { data, error } = await passwordChange({ new_password: password });
     if (error) {
-      console.log(error.message);
-      alert("비밀번호 변경에 실패했습니다.");
+      alert(translateErrorMessage(error.message));
       return;
     }
     alert("비밀번호 변경에 성공했습니다.");

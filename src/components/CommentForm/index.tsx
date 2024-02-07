@@ -12,6 +12,7 @@ import styles from "./style.module.css";
 import { getUserName } from "@/app/util/getUserName";
 import { User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
+import { mutate } from "swr";
 
 const schema = yup.object().shape({
   comment: yup
@@ -42,7 +43,7 @@ export default function CommentForm({
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setFocus("comment")
+    setFocus("comment");
   }, [setFocus]);
 
   const handleClose = () => {
@@ -65,10 +66,10 @@ export default function CommentForm({
           comment,
         }),
       });
-
+      mutate(`/api/book/${book.id}`);
       handleClose();
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
 
     router.refresh();

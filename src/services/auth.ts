@@ -63,14 +63,3 @@ export const findPassword = ({ email }: { email: string }) => {
     redirectTo: `${process.env.NEXT_PUBLIC_NEXT_URL}/mypage/password_reset`,
   });
 };
-
-export const withdrawal = async (user_id: string) => {
-  await fetch("/auth/withdrawal", {
-    method: "POST",
-    body: JSON.stringify({
-      user_id,
-    }),
-  });
-
-  return supabase.auth.signOut();
-};

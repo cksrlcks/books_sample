@@ -30,18 +30,11 @@ export default function ActionBar({
       setLikeLoading(false);
       return;
     }
-    if (liked.length === 0) {
-      await fetch("/api/like", {
-        method: "POST",
-        body: JSON.stringify({ book_id: book.id, user_id: user.id }),
-      });
-    } else {
-      await fetch("/api/like", {
-        method: "DELETE",
-        body: JSON.stringify({ like_id: liked[0].id }),
-      });
-    }
-    router.refresh();
+    await fetch("/api/like", {
+      method: "POST",
+      body: JSON.stringify({ book_id: book.id, user_id: user.id }),
+    });
+    mutate(`/api/book/${book.id}`);
     setLikeLoading(false);
   };
 
