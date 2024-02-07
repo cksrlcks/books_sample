@@ -24,6 +24,8 @@ export default function UserInfo() {
     ) {
       setIsLoading(true);
 
+      signOut();
+
       const res = await fetch("/auth/withdrawal", {
         method: "POST",
         body: JSON.stringify({
@@ -32,7 +34,7 @@ export default function UserInfo() {
       });
 
       if (res.ok) {
-        await signOut();
+        router.refresh();
         router.replace("/");
       } else {
         alert("탈퇴에 문제가 생겼습니다.");
