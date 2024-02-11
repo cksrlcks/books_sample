@@ -66,6 +66,14 @@
   left: 66.666%;
 }
 
+.pin.index-none {
+  display: none;
+}
+
+.writeBtn {
+  display: none;
+}
+
 @media screen and (min-width: 600px) {
   .nav {
     bottom: auto;
@@ -76,8 +84,25 @@
     transform: translateX(-400px);
     background: none;
     border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 30px;
   }
-
+  .navwrapper {
+    margin: 0;
+  }
+  .writeBtn {
+    display: block;
+    text-align: right;
+    width: 100%;
+    padding-right: 16px;
+    font-weight: 700;
+    opacity: 0.3;
+  }
+  .writeBtn.active {
+    opacity: 1;
+  }
   .nav ul {
     align-items: flex-end;
     flex-direction: column;
