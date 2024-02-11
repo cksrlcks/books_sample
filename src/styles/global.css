@@ -119,4 +119,5 @@ input {
 
 .global-inner {
   padding: 0 20px;
+  overflow: hidden;
 }

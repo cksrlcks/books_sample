@@ -1,6 +1,6 @@
 import { Roboto } from "next/font/google";
-import "../styles/global.css";
-import SWRConfigContext from "../context/SWRConfigContext";
+import "../../styles/global.css";
+import SWRConfigContext from "../../context/SWRConfigContext";
 import { AuthContextProvider } from "@/context/AuthContext";
 import { Metadata, Viewport } from "next";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -8,8 +8,8 @@ import ScrollToTop from "@/components/ScrollToTop";
 const roboto = Roboto({ weight: ["400", "500", "700"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Sample books",
-  description: "Sample books",
+  title: "Sample books admin",
+  description: "Sample books admin",
 };
 
 export const viewport: Viewport = {
@@ -23,11 +23,13 @@ export const viewport: Viewport = {
 export default function layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
-      <body className={`app-layout ${roboto.className}`}>
+      <body className={roboto.className}>
         <ScrollToTop />
-        <div className="app-inner">
+        <div>
           <AuthContextProvider>
-            <SWRConfigContext>{children}</SWRConfigContext>
+            <SWRConfigContext>
+              <div>{children}</div>
+            </SWRConfigContext>
           </AuthContextProvider>
         </div>
       </body>

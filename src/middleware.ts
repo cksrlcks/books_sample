@@ -58,10 +58,28 @@ export async function middleware(request: NextRequest) {
     data: { user },
     error,
   } = await supabase.auth.getUser();
-  if (!user) {
-    return NextResponse.redirect(new URL("/mypage/signin", request.url));
+
+  if (request.nextUrl.pathname.startsWith("/admin")) {
+    if (!user) {
+      return NextResponse.redirect(new URL("/mypage/signin", request.url));
+    }
+
+    const { data: profile, error } = await supabase
+      .from("profile")
+      .select("*")
+      .eq("id", user.id)
+      .single();
+    if (profile.role !== "admin") {
+      return NextResponse.redirect(new URL("/", request.url));
+    } else {
+      return response;
+    }
+  } else {
+    if (!user) {
+      return NextResponse.redirect(new URL("/mypage/signin", request.url));
+    }
+    return response;
   }
-  return response;
 }
 
 export const config = {
@@ -76,5 +94,6 @@ export const config = {
     "/mypage/me",
     "/mypage/activity",
     "/mypage/password",
+    "/admin",
   ],
 };
