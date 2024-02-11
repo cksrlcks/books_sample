@@ -37,6 +37,7 @@ export default function UserInfo() {
         router.refresh();
         router.replace("/");
       } else {
+        console.log(res);
         alert("탈퇴에 문제가 생겼습니다.");
       }
     }

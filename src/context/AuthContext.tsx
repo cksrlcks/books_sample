@@ -20,6 +20,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 export type AuthContextType = {
   user: User | null;
+  profile: any;
   signOut: () => Promise<{
     error: AuthError | null;
   }>;
@@ -57,6 +58,7 @@ export type AuthContextType = {
 //타입을 넣어줘도 쓰는곳에서 못읽음???
 export const AuthContext = createContext<AuthContextType>({
   user: null,
+  profile: null,
   signOut,
   signInWithGoogle,
   signInWithPassword,
@@ -73,6 +75,7 @@ export const AuthContextProvider = ({
   const supabase = createClient();
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
     async function getActiveSession() {
@@ -82,6 +85,16 @@ export const AuthContextProvider = ({
       setSession(activeSession);
       setUser(activeSession?.user ?? null);
     }
+
+    async function getUserProfile(user_id: string) {
+      const { data, error } = await supabase
+        .from("profile")
+        .select("*")
+        .eq("id", user_id)
+        .single();
+      setProfile(data);
+    }
+
     getActiveSession();
 
     const {
@@ -89,6 +102,11 @@ export const AuthContextProvider = ({
     } = supabase.auth.onAuthStateChange((event, currentSession) => {
       setSession(currentSession);
       setUser(currentSession?.user ?? null);
+      if (currentSession?.user) {
+        getUserProfile(currentSession.user.id);
+      } else {
+        setProfile(null);
+      }
     });
     return () => {
       authListener?.unsubscribe();
@@ -97,6 +115,7 @@ export const AuthContextProvider = ({
 
   const value = {
     user,
+    profile,
     signOut,
     signInWithGoogle,
     signInWithPassword,

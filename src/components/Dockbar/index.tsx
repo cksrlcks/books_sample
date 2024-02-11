@@ -3,8 +3,9 @@ import styles from "./style.module.css";
 import ActiveLink from "./ActiveLink";
 import { useEffect, useRef, useState } from "react";
 import { useSelectedLayoutSegment } from "next/navigation";
-
+import { useUser } from "@/context/AuthContext";
 export default function Dockbar() {
+  const { profile } = useUser();
   const segement = useSelectedLayoutSegment();
   const [currentIdx, setCurrentIdx] = useState<string | null>(null);
   useEffect(() => {
@@ -12,8 +13,10 @@ export default function Dockbar() {
       setCurrentIdx("1");
     } else if (segement === "mypage") {
       setCurrentIdx("2");
-    } else {
+    } else if (segement === null) {
       setCurrentIdx("0");
+    } else {
+      setCurrentIdx("none");
     }
   }, [segement]);
 

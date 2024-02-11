@@ -8,17 +8,21 @@ export default function ActiveLink({
   activeCss,
   href,
   children,
+  className,
 }: {
   activeCss: string;
   href: string;
-  className?: string;
   children: React.ReactNode;
+  className?: string;
 }) {
   const path = usePathname();
   const segment = useSelectedLayoutSegment();
   const isActive = path === href || (segment && href.includes(segment));
   return (
-    <Link href={href} className={isActive ? activeCss : ""}>
+    <Link
+      href={href}
+      className={isActive ? `${activeCss} ${className}` : className}
+    >
       {children}
     </Link>
   );
