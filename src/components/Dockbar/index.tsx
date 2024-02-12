@@ -4,6 +4,7 @@ import ActiveLink from "./ActiveLink";
 import { useEffect, useRef, useState } from "react";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { useUser } from "@/context/AuthContext";
+import Link from "next/link";
 export default function Dockbar() {
   const { profile } = useUser();
   const segement = useSelectedLayoutSegment();
@@ -26,27 +27,34 @@ export default function Dockbar() {
     { id: 3, name: "마이", path: "/mypage" },
   ];
   return (
-    <nav className={styles.nav}>
-      <div className={`${styles.navwrapper}`}>
-        <span
-          className={`${styles.pin} ${
-            currentIdx ? styles[`index-${currentIdx}`] : styles.hide
-          }`}
-        >
-          <span className={styles.bar}></span>
-        </span>
-        <ul>
-          {NavLinks.map((link) => {
-            return (
-              <li key={link.id}>
-                <ActiveLink href={link.path} activeCss={styles.active}>
-                  {link.name}
-                </ActiveLink>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    </nav>
+    <>
+      {profile?.role === "admin" && (
+        <Link href="/admin" className={styles.adminBtn}>
+          관리자
+        </Link>
+      )}
+      <nav className={styles.nav}>
+        <div className={`${styles.navwrapper}`}>
+          <span
+            className={`${styles.pin} ${
+              currentIdx ? styles[`index-${currentIdx}`] : styles.hide
+            }`}
+          >
+            <span className={styles.bar}></span>
+          </span>
+          <ul>
+            {NavLinks.map((link) => {
+              return (
+                <li key={link.id}>
+                  <ActiveLink href={link.path} activeCss={styles.active}>
+                    {link.name}
+                  </ActiveLink>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </nav>
+    </>
   );
 }
