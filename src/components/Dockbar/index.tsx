@@ -1,26 +1,8 @@
-"use client";
 import styles from "./style.module.css";
 import ActiveLink from "./ActiveLink";
-import { useEffect, useRef, useState } from "react";
-import { useSelectedLayoutSegment } from "next/navigation";
-import { useUser } from "@/context/AuthContext";
-import Link from "next/link";
-export default function Dockbar() {
-  const { profile } = useUser();
-  const segement = useSelectedLayoutSegment();
-  const [currentIdx, setCurrentIdx] = useState<string | null>(null);
-  useEffect(() => {
-    if (segement === "book") {
-      setCurrentIdx("1");
-    } else if (segement === "mypage") {
-      setCurrentIdx("2");
-    } else if (segement === null) {
-      setCurrentIdx("0");
-    } else {
-      setCurrentIdx("none");
-    }
-  }, [segement]);
+import Pin from "./Pin";
 
+export default async function Dockbar() {
   const NavLinks = [
     { id: 1, name: "홈", path: "/" },
     { id: 2, name: "책", path: "/book" },
@@ -28,20 +10,9 @@ export default function Dockbar() {
   ];
   return (
     <>
-      {profile?.role === "admin" && (
-        <Link href="/admin" className={styles.adminBtn}>
-          관리자
-        </Link>
-      )}
       <nav className={styles.nav}>
         <div className={`${styles.navwrapper}`}>
-          <span
-            className={`${styles.pin} ${
-              currentIdx ? styles[`index-${currentIdx}`] : styles.hide
-            }`}
-          >
-            <span className={styles.bar}></span>
-          </span>
+          <Pin />
           <ul>
             {NavLinks.map((link) => {
               return (

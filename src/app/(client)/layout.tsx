@@ -29,8 +29,8 @@ export default function layout({ children }: { children: React.ReactNode }) {
         <div className="app-inner">
           <AuthContextProvider>
             <SWRConfigContext>
-              <div className="app-body">{children}</div>
               <Dockbar />
+              <div className="app-body">{children}</div>
             </SWRConfigContext>
           </AuthContextProvider>
         </div>
