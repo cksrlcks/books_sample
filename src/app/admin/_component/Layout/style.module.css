@@ -1,0 +1,31 @@
+.header {
+  background: #000;
+}
+.header .nav ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  list-style: none;
+  gap: 20px;
+}
+
+.header .nav ul a {
+  display: flex;
+  color: inherit;
+  padding: 1em;
+  opacity: 0.4;
+}
+
+.header .nav ul a.active {
+  opacity: 1;
+}
+
+.main {
+  padding: 20px;
+}
+.inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+}
