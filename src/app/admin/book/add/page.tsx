@@ -1,13 +1,14 @@
 "use client";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
+import type { PutBlobResult } from "@vercel/blob";
 
 export default function page() {
   const router = useRouter();
   const schema = yup.object().shape({
-    coverImgUrl: yup.string().required(),
     name: yup.string().required(),
     description: yup.string().required(),
     writter: yup.string().required(),
@@ -20,19 +21,33 @@ export default function page() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({ resolver: yupResolver(schema) });
-
+  const inputFileRef = useRef<HTMLInputElement>(null);
+  const [blob, setBlob] = useState<PutBlobResult | null>(null);
   const onSubmit: SubmitHandler<FormData> = async ({
-    coverImgUrl,
     name,
     description,
     writter,
     publisher,
   }) => {
     try {
+      if (!inputFileRef.current?.files) {
+        throw new Error("No file selected");
+      }
+
+      const file = inputFileRef.current.files[0];
+
+      const response = await fetch(`/api/book/upload?filename=${file.name}`, {
+        method: "POST",
+        body: file,
+      });
+
+      const newBlob = (await response.json()) as PutBlobResult;
+      setBlob(newBlob);
+
       await fetch("/api/book", {
         method: "POST",
         body: JSON.stringify({
-          coverImgUrl,
+          coverImgUrl: newBlob.url,
           name,
           description,
           writter,
@@ -40,7 +55,7 @@ export default function page() {
         }),
       });
     } catch (error) {
-      alert(error);
+      console.log(error);
     }
 
     router.push("/admin/book");
@@ -50,11 +65,12 @@ export default function page() {
     <>
       <h2>책추가하기</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input
+        {/* <input
           type="text"
           {...register("coverImgUrl")}
           placeholder="책커버이미지 url"
-        />
+        /> */}
+        <input name="file" ref={inputFileRef} type="file" required />
         <br />
         <input type="text" {...register("name")} placeholder="책이름" />
         <br />

@@ -7,12 +7,21 @@ import Timeago from "../Timeago";
 
 export default function BookCard({ like }: { like: Like }) {
   const { books: item, created_at } = like;
+  if (!item) {
+    return <div>삭제된 책입니다.</div>;
+  }
   return (
     <Link href={`/book/${item.id}`}>
       <article className={styles.bookItem}>
         <figure className={styles.bookThumbFrame}>
           {item["cover_img_url"] ? (
-            <Image src={item["cover_img_url"]} alt={item.name} fill sizes="100%" priority={false} />
+            <Image
+              src={item["cover_img_url"]}
+              alt={item.name}
+              fill
+              sizes="100%"
+              priority={false}
+            />
           ) : (
             <div className={styles.bookTempCover}>book</div>
           )}

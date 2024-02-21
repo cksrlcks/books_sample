@@ -14,7 +14,7 @@ export default function MyLikeList() {
       ) : (
         <div className={styles.bookList}>
           {data?.map((like) => (
-            <div className={styles.item} key={like.books.id}>
+            <div className={styles.item} key={like.id}>
               <Book like={like} />
             </div>
           ))}

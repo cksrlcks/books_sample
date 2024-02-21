@@ -6,6 +6,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "contents.kyobobook.co.kr",
       },
+      {
+        protocol: "https",
+        hostname: "bzqasnewbcs0ymcm.public.blob.vercel-storage.com",
+      },
     ],
   },
   typescript: {

@@ -19,6 +19,7 @@ export default function useInfiniteFetch<T>({ url, limit }: hookProps) {
     isLoading,
     size,
     setSize,
+    mutate,
   } = useSWRInfinite<T[]>(getKey);
 
   const isEmpty = items?.[0]?.length === 0;
@@ -29,5 +30,5 @@ export default function useInfiniteFetch<T>({ url, limit }: hookProps) {
       return array.concat.apply([], items);
     }
   }, [items]);
-  return { data, error, isLoading, size, setSize, isEmpty, isEnd };
+  return { data, error, isLoading, size, setSize, isEmpty, isEnd, mutate };
 }
