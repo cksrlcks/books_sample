@@ -45,7 +45,12 @@ export default function Page() {
             <tr key={book.id}>
               <td>{book.name}</td>
               <td>
-                <button type="button">수정</button>
+                <button
+                  type="button"
+                  onClick={() => router.push(`/admin/book/update/${book.id}`)}
+                >
+                  수정
+                </button>
               </td>
               <td>
                 <button type="button" onClick={() => handleDelete(book.id)}>

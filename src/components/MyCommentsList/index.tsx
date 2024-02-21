@@ -19,25 +19,33 @@ export default function CommentList() {
         <div>가져오는중</div>
       ) : (
         <div className={styles.list}>
-          {data?.map((comment) => (
-            <Link
-              href={`/book/${comment.books.id}`}
-              key={comment.id}
-              className={styles.item}
-            >
-              <div className={styles.bookname}>
-                <FcBookmark /> {comment.books.name}
-              </div>
-              <div className={styles.comment}>{comment.comment}</div>
-              <div className={styles.control}>
-                <span className={styles.date}>
-                  등록일 : <Timeago date={comment.created_at} />
-                </span>
+          {data?.map((comment) => {
+            if (!comment.book_id) {
+              return <div>삭제된 책입니다.</div>;
+            }
+            return (
+              <Link
+                href={`/book/${comment.books.id}`}
+                key={comment.id}
+                className={styles.item}
+              >
+                <div className={styles.bookname}>
+                  <FcBookmark /> {comment.books.name}
+                </div>
+                <div className={styles.comment}>{comment.comment}</div>
+                <div className={styles.control}>
+                  <span className={styles.date}>
+                    등록일 : <Timeago date={comment.created_at} />
+                  </span>
 
-                <DeleteButton comment_id={comment.id} callback={handleMutate} />
-              </div>
-            </Link>
-          ))}
+                  <DeleteButton
+                    comment_id={comment.id}
+                    callback={handleMutate}
+                  />
+                </div>
+              </Link>
+            );
+          })}
         </div>
       )}
     </div>
