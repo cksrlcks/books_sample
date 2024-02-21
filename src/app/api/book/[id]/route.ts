@@ -26,3 +26,22 @@ export async function GET(
 
   return NextResponse.json(data);
 }
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const supabase = createClient(cookies());
+
+  const { data, error } = await supabase
+    .from("books")
+    .delete()
+    .eq("id", params.id);
+
+  if (error) {
+    console.log(error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json(data);
+}
